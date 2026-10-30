@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- Предложение: первый экран на телефоне. Рендер 390×1100 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #241b13; --cream: #f1dfc0; --text: #f6efe3; --muted: #c9bba5; --line: rgba(241,223,192,.18); }
+  body { width: 390px; font-family: Manrope, Arial, sans-serif; background: var(--bg); color: var(--text); }
+  header { height: 62px; display: flex; align-items: center; gap: 14px; padding: 0 16px; border-bottom: 1px solid var(--line); background: #1e160f; }
+  header svg { width: 24px; height: 24px; }
+  .logo { font-family: "Tenor Sans", serif; font-size: 24px; letter-spacing: .12em; color: var(--cream); margin-right: auto; }
+  .cart { position: relative; }
+  .cart b { position: absolute; top: -7px; right: -9px; background: var(--cream); color: #241b13; font-size: 10px; min-width: 17px; height: 17px; border-radius: 9px; display: grid; place-items: center; }
+  .photo { height: 260px; background: url(concept.webp) 80% 45% / 260% auto no-repeat; position: relative; }
+  .photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--bg) 0%, rgba(36,27,19,0) 45%); }
+  .text { padding: 4px 16px 22px; }
+  .eyebrow { color: #e9d3ad; font-size: 14px; font-weight: 600; }
+  h1 { font-family: "Tenor Sans", serif; font-weight: 400; font-size: 36px; line-height: 1.08; margin: 10px 0 12px; }
+  .lead { font-size: 15px; line-height: 1.5; color: #e4d9c7; }
+  .price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 18px 0 18px; }
+  .price b { font-size: 30px; font-weight: 800; color: var(--cream); }
+  .price span { color: var(--muted); font-size: 14px; }
+  .price em { font-style: normal; font-size: 13px; font-weight: 700; color: var(--cream); border: 1px solid var(--line); border-radius: 20px; padding: 5px 11px; }
+  .btn { height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .btn--main { background: var(--cream); color: #241b13; }
+  .btn--line { border: 1.5px solid var(--cream); }
+  .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 20px; }
+  .stats div { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .stats b { display: block; font-size: 15px; }
+  .stats span { font-size: 13px; color: var(--muted); }
+  .colors { margin: 0 16px 24px; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; }
+  .colors i { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); }
+  .colors span { margin-left: 6px; }
+</style>
+</head>
+<body>
+  <header>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    <div class="logo">AUREX</div>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M16 16l5 5"/></svg>
+    <span class="cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg><b>3</b></span>
+  </header>
+  <div class="photo"></div>
+  <div class="text">
+    <div class="eyebrow">Филамент для 3D-печати · розница и опт</div>
+    <h1>От одной катушки до целой паллеты</h1>
+    <p class="lead">PLA, PETG, ABS и TPU с заводов Шэньчжэня. 1,75 мм — для Bambu Lab, Creality, Prusa и других.</p>
+    <div class="price"><b>от 1 290 ₽</b><span>за катушку 1 кг</span><em>от 10 шт. — 1 150 ₽</em></div>
+    <div class="btn btn--main">Перейти в каталог →</div>
+    <div class="btn btn--line">Оптовые цены</div>
+  </div>
+  <div class="stats">
+    <div><b>7 материалов</b><span>от PLA до TPU</span></div>
+    <div><b>19 цветов</b><span>в наличии</span></div>
+    <div><b>1–2 дня</b><span>на отправку</span></div>
+    <div><b>Россия и СНГ</b><span>СДЭК и Почта</span></div>
+  </div>
+  <div class="colors"><i style="background:#1d1d1b"></i><i style="background:#f2f1ec"></i><i style="background:#c8302a"></i><i style="background:#2457b5"></i><i style="background:#6f6c4c"></i><i style="background:#c9a24a"></i><i style="background:#e8742a"></i><span>Все цвета →</span></div>
+</body>
+</html>

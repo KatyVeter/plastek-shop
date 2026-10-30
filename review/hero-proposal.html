@@ -1,0 +1,101 @@
+<!doctype html>
+<!-- Предложение: первый экран по концепту, но с исправлениями. Фото справа — из концепта (заменить реальным). Рендер 1670×941 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --bg: #241b13; --cream: #f1dfc0; --cream-2: #e9d3ad; --text: #f6efe3; --muted: #c9bba5; --line: rgba(241,223,192,.18); }
+  body { width: 1670px; height: 941px; overflow: hidden; font-family: Manrope, Arial, sans-serif; color: var(--text); background: var(--bg); position: relative; }
+  .photo { position: absolute; inset: 0; background: url(concept.webp) right center / cover no-repeat; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 0%, var(--bg) 56.5%, rgba(36,27,19,.8) 60%, rgba(36,27,19,0) 68%); }
+  .shade-b { position: absolute; left: 0; right: 0; bottom: 0; height: 170px; background: linear-gradient(0deg, rgba(36,27,19,.92), rgba(36,27,19,0)); }
+
+  header { position: absolute; left: 0; right: 0; top: 0; height: 92px; background: #1e160f; border-bottom: 1px solid var(--line);
+           display: flex; align-items: center; padding: 0 70px; gap: 46px; }
+  .logo { font-family: "Tenor Sans", serif; font-size: 40px; letter-spacing: .12em; color: var(--cream); }
+  nav { display: flex; gap: 34px; font-size: 18px; font-weight: 600; }
+  nav span { display: inline-flex; align-items: center; gap: 6px; }
+  nav .on { color: var(--cream); }
+  .chev { width: 13px; opacity: .8; }
+  .search { margin-left: auto; width: 300px; height: 46px; border-radius: 23px; border: 1px solid var(--line); background: rgba(255,255,255,.05);
+            display: flex; align-items: center; gap: 10px; padding: 0 18px; color: var(--muted); font-size: 16px; }
+  .icons { display: flex; gap: 26px; align-items: center; }
+  .icons svg { width: 26px; height: 26px; }
+  .cart { position: relative; }
+  .cart b { position: absolute; top: -9px; right: -12px; background: var(--cream); color: #241b13; font-size: 12px; min-width: 21px; height: 21px; border-radius: 11px; display: grid; place-items: center; }
+
+  .text { position: absolute; left: 98px; top: 150px; width: 760px; }
+  .eyebrow { color: var(--cream-2); font-size: 22px; font-weight: 600; letter-spacing: .02em; }
+  h1 { font-family: "Tenor Sans", serif; font-weight: 400; font-size: 76px; line-height: 1.04; margin: 18px 0 22px; letter-spacing: -.005em; }
+  .lead { font-size: 22px; line-height: 1.5; color: #e4d9c7; }
+  .printers { display: flex; gap: 22px; margin-top: 14px; font-size: 14px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .price { display: flex; align-items: center; gap: 18px; margin: 30px 0 30px; }
+  .price b { font-size: 40px; font-weight: 800; color: var(--cream); }
+  .price span { color: var(--muted); font-size: 17px; }
+  .price em { font-style: normal; font-size: 15px; font-weight: 700; color: var(--cream); border: 1px solid var(--line); border-radius: 20px; padding: 7px 14px; background: rgba(241,223,192,.08); }
+  .btns { display: flex; gap: 22px; }
+  .btn { height: 70px; padding: 0 42px; border-radius: 12px; display: inline-flex; align-items: center; gap: 14px; font-size: 21px; font-weight: 700; }
+  .btn--main { background: var(--cream); color: #241b13; }
+  .btn--line { border: 1.5px solid var(--cream); color: var(--text); }
+
+  .stats { position: absolute; left: 98px; bottom: 54px; display: flex; gap: 0; }
+  .stat { display: flex; align-items: center; gap: 14px; padding: 0 30px; border-left: 1px solid var(--line); }
+  .stat:first-child { padding-left: 0; border-left: 0; }
+  .stat svg { width: 36px; height: 36px; color: var(--cream-2); flex: none; }
+  .stat b { display: block; font-size: 18px; }
+  .stat span { font-size: 15px; color: var(--muted); }
+  .colors { position: absolute; right: 70px; bottom: 58px; display: flex; align-items: center; gap: 10px; background: rgba(30,22,15,.75); border: 1px solid var(--line);
+            border-radius: 30px; padding: 10px 18px 10px 14px; font-size: 15px; font-weight: 700; }
+  .colors i { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.35); }
+  .tag { position: absolute; right: 70px; top: 120px; background: rgba(30,22,15,.75); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; font-size: 14px; color: var(--muted); }
+  .tag b { color: var(--cream); }
+</style>
+</head>
+<body>
+  <div class="photo"></div><div class="shade"></div><div class="shade-b"></div>
+
+  <header>
+    <div class="logo">AUREX</div>
+    <nav>
+      <span class="on">Каталог <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span>Подбор пластика</span>
+      <span>Опт <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span>Доставка <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></span>
+      <span>О компании</span>
+    </nav>
+    <div class="search"><svg width="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M16 16l5 5"/></svg>PLA, PETG, цвет…</div>
+    <div class="icons">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+      <span class="cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 4h2l2.4 11h11L21 7H6.2"/><circle cx="9" cy="19.5" r="1.5"/><circle cx="17" cy="19.5" r="1.5"/></svg><b>3</b></span>
+    </div>
+  </header>
+
+  <div class="text">
+    <div class="eyebrow">Филамент для 3D-печати · розница и опт</div>
+    <h1>От одной катушки<br>до целой паллеты</h1>
+    <p class="lead">PLA, PETG, ABS и TPU с заводов Шэньчжэня. Диаметр 1,75 мм — подходит для большинства принтеров:</p>
+    <div class="printers"><span>Bambu Lab</span><span>Creality</span><span>Prusa</span><span>Anycubic</span><span>Elegoo</span></div>
+    <div class="price"><b>от 1 290 ₽</b><span>за катушку 1 кг</span><em>от 10 шт. — 1 150 ₽</em></div>
+    <div class="btns">
+      <span class="btn btn--main">Перейти в каталог <svg width="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></span>
+      <span class="btn btn--line">Оптовые цены</span>
+    </div>
+  </div>
+
+  <div class="tag">На фото: <b>PLA Matte, хаки</b> · 1 490 ₽</div>
+
+  <div class="stats">
+    <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b>Шэньчжэнь</b><span>склад и отгрузка</span></div></div>
+    <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><div><b>7 материалов</b><span>от PLA до TPU</span></div></div>
+    <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h13v10H3zM16 10h4l1 3v4h-5"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><div><b>1–2 дня</b><span>отправка после оплаты</span></div></div>
+    <div class="stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><div><b>Россия и СНГ</b><span>СДЭК и Почта</span></div></div>
+  </div>
+
+  <div class="colors">
+    <i style="background:#1d1d1b"></i><i style="background:#f2f1ec"></i><i style="background:#c8302a"></i><i style="background:#2457b5"></i><i style="background:#6f6c4c"></i><i style="background:#c9a24a"></i><i style="background:#e8742a"></i>
+    19 цветов в наличии
+  </div>
+</body>
+</html>

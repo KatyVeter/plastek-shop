@@ -1,0 +1,71 @@
+<!doctype html>
+<!-- Разбор концепта первого экрана: номера на макете + пояснения. Рендер в PNG 1670px -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1670px; font-family: Manrope, Arial, sans-serif; background: #f6f3ec; color: #1f2214; }
+  .shot { position: relative; }
+  .shot img { display: block; width: 1670px; }
+  .m { position: absolute; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; display: grid; place-items: center;
+       font-weight: 800; font-size: 20px; color: #fff; border: 3px solid #fff; box-shadow: 0 6px 18px rgba(0,0,0,.45); }
+  .bad { background: #d6452f; }
+  .good { background: #3f8a3a; }
+  .box { position: absolute; border: 3px dashed rgba(255,255,255,.75); border-radius: 12px; }
+  .legend { padding: 44px 60px 56px; }
+  .legend h1 { font-size: 34px; margin-bottom: 6px; }
+  .legend .sub { color: #5c5a4e; font-size: 18px; margin-bottom: 30px; }
+  .score { display: flex; gap: 16px; margin-bottom: 34px; }
+  .score div { background: #fff; border: 1px solid #e3ddce; border-radius: 14px; padding: 18px 26px; }
+  .score b { font-size: 34px; display: block; }
+  .score span { color: #5c5a4e; font-size: 15px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 40px; }
+  .it { display: grid; grid-template-columns: 40px 1fr; gap: 14px; align-items: start; background: #fff; border: 1px solid #e3ddce; border-radius: 14px; padding: 16px 18px; }
+  .it i { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-weight: 800; color: #fff; }
+  .it b { display: block; font-size: 17px; margin-bottom: 4px; }
+  .it p { font-size: 15px; color: #45473a; line-height: 1.45; }
+</style>
+</head>
+<body>
+  <div class="shot">
+    <img src="concept.webp" alt="">
+    <div class="box" style="left:5%;top:20%;width:44%;height:44%"></div>
+    <div class="box" style="left:5%;top:79%;width:52%;height:10%"></div>
+    <div class="m good" style="left:24%;top:5%">1</div>
+    <div class="m bad"  style="left:41%;top:9%">2</div>
+    <div class="m bad"  style="left:67%;top:9%">3</div>
+    <div class="m bad"  style="left:85%;top:10%">4</div>
+    <div class="m bad"  style="left:49%;top:33%">5</div>
+    <div class="m bad"  style="left:49.5%;top:53%">6</div>
+    <div class="m good" style="left:3.6%;top:65%">7</div>
+    <div class="m bad"  style="left:49.5%;top:67%">8</div>
+    <div class="m bad"  style="left:59%;top:84%">9</div>
+    <div class="m bad"  style="left:86%;top:48%">10</div>
+    <div class="m good" style="left:75%;top:26%">11</div>
+  </div>
+
+  <div class="legend">
+    <h1>Разбор первого экрана</h1>
+    <p class="sub">Зелёные номера — оставить, красные — поправить</p>
+    <div class="score">
+      <div><b>8,5 / 10</b><span>внешний вид</span></div>
+      <div><b>5,5 / 10</b><span>удобство и польза для покупателя</span></div>
+    </div>
+    <div class="grid">
+      <div class="it"><i class="good">1</i><div><b>Логотип и общий стиль</b><p>Тёмный тёплый фон, бежево-золотой акцент, изящный шрифт — выглядит дорого. Но в макете бренд AUREX, а сайт сейчас PLASTEK: нужно выбрать одно.</p></div></div>
+      <div class="it"><i class="bad">2</i><div><b>«Материалы» и «Решения» дублируют «Каталог»</b><p>Три пункта про одно и то же. Покупатель не поймёт, куда нажать. Лучше: «Каталог» с мега-меню + «Подбор пластика».</p></div></div>
+      <div class="it"><i class="bad">3</i><div><b>Опечатка «О квмпании»</b><p>Нейросеть исказила текст. В вёрстке будет нормальный текст, но в презентации макета это бросается в глаза.</p></div></div>
+      <div class="it"><i class="bad">4</i><div><b>Глобус, избранное, нет счётчика корзины</b><p>Сайт только на русском — переключатель языка не нужен. У корзины нет числа товаров. Поиск спрятан в иконку, хотя в магазине его ищут сразу.</p></div></div>
+      <div class="it"><i class="bad">5</i><div><b>Заголовок — общий слоган</b><p>«Материалы для идей любого масштаба» подойдёт и магазину красок, и ткани. Из него не ясно, что продаётся и для кого.</p></div></div>
+      <div class="it"><i class="bad">6</i><div><b>«Широкий выбор по выгодным ценам»</b><p>Штамп, который пишут все. Лучше показать конкретику: какие пластики, какой диаметр, к каким принтерам подходит.</p></div></div>
+      <div class="it"><i class="good">7</i><div><b>Кнопки</b><p>Главная — заметная светлая, вторая — контурная, «Оптовые поставки» сразу на виду. Так и оставить.</p></div></div>
+      <div class="it"><i class="bad">8</i><div><b>Нет цены и совместимости</b><p>Главный аргумент магазина — цена — нигде не виден. Не написано «от 1 290 ₽» и что от 10 катушек дешевле.</p></div></div>
+      <div class="it"><i class="bad">9</i><div><b>Цифры не совпадают с каталогом</b><p>«20+ материалов, 100+ цветов, доставка по всему миру» — сейчас 7 материалов, 19 цветов, доставка в Россию и СНГ. Неправда в цифрах подрывает доверие.</p></div></div>
+      <div class="it"><i class="bad">10</i><div><b>Катушка сгенерирована</b><p>На наклейке бессмысленные буквы, такой катушки не существует. Нужно реальное фото вашего товара в такой же постановке.</p></div></div>
+      <div class="it"><i class="good">11</i><div><b>Фото товара крупно</b><p>Катушка — герой экрана, оливковый цвет пластика попадает в палитру бренда, свет и фактура камней создают настроение. Сильнее, чем рисованные катушки.</p></div></div>
+    </div>
+  </div>
+</body>
+</html>

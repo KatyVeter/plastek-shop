@@ -1,0 +1,49 @@
+<!doctype html>
+<!-- Исходник картинки-превью для ссылок (img/og-cover.png), 1200×630.
+     Пересобрать: открыть в браузере headless со скриншотом 1200×630 -->
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; font-family: Manrope, Arial, sans-serif; background: radial-gradient(ellipse at 78% 50%, #3d4a2c 0%, #2f3a22 60%, #252e1a 100%); color: #fff; position: relative; }
+  .text { position: absolute; left: 80px; top: 0; bottom: 0; width: 620px; display: flex; flex-direction: column; justify-content: center; }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; letter-spacing: .14em; font-size: 24px; margin-bottom: 44px; }
+  .mark { width: 54px; height: 54px; border-radius: 50%; background: #d9b45c; display: grid; place-items: center; }
+  h1 { font-size: 72px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em; }
+  p { font-size: 28px; color: #e6e2cf; margin-top: 26px; font-weight: 500; }
+  .price { margin-top: 34px; font-size: 38px; font-weight: 800; color: #d9b45c; }
+  .disc { position: absolute; right: -60px; top: 50%; width: 560px; height: 560px; margin-top: -280px; border-radius: 50%; background: rgba(255,255,255,.05); border: 1px solid rgba(217,180,92,.25); }
+  .stack { position: absolute; right: 30px; top: 50%; width: 500px; height: 500px; margin-top: -250px; }
+  .stack svg { position: absolute; filter: drop-shadow(0 20px 26px rgba(0,0,0,.4)); }
+  .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 12px; background: #d9b45c; }
+</style>
+</head>
+<body>
+  <div class="disc"></div>
+  <div class="text">
+    <div class="brand"><span class="mark"><svg width="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M5 19V8a3 3 0 016 0v11M11 8a3 3 0 016 0v11M17 8v11"/></svg></span>PLASTEK</div>
+    <h1>Филамент<br>для 3D&#8209;печати</h1>
+    <p>PLA, PETG, ABS и TPU. Розница и опт</p>
+    <div class="price">от $13.90 за катушку</div>
+  </div>
+  <div class="stack" id="stack"></div>
+  <div class="bar"></div>
+  <script>
+    function spool(color, style) {
+      let rings = "", spokes = "";
+      for (let r = 38; r <= 88; r += 3) rings += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="rgba(0,0,0,.12)"/>`;
+      for (let i = 0; i < 3; i++) spokes += `<rect x="96" y="6" width="8" height="62" rx="4" fill="#ece6d3" stroke="#d3cbb2" transform="rotate(${i * 120 + 30} 100 100)"/>`;
+      return `<svg viewBox="0 0 200 200" style="${style}"><circle cx="100" cy="100" r="97" fill="#ece6d3" stroke="#d3cbb2" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="90" fill="${color}"/>${rings}${spokes}
+        <circle cx="100" cy="100" r="34" fill="#ece6d3" stroke="#d3cbb2" stroke-width="1.5"/><circle cx="100" cy="100" r="14" fill="#2f3a22"/></svg>`;
+    }
+    document.getElementById("stack").innerHTML =
+      spool("#2457b5", "width:180px;right:0;bottom:40px;z-index:1") +
+      spool("#e8742a", "width:110px;right:20px;top:10px;z-index:1") +
+      spool("#d4a83f", "width:330px;left:90px;top:30px;z-index:2") +
+      spool("#c8302a", "width:200px;left:20px;bottom:10px;z-index:3");
+  </script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Товар — PLASTEK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="product">
+
+  <div class="wrap">
+    <div class="crumbs" style="margin-top:28px" id="crumbs"></div>
+    <div class="product" id="product" data-catalog><div class="loading">Загружаем товар…</div></div>
+  </div>
+
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section__head"><h2 class="h2">Другие материалы</h2></div>
+      <div class="grid" id="related"></div>
+    </div>
+  </section>
+
+  <script src="js/vendor/xlsx.full.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const { $, $$, money, esc, spool, card, stockLabel, fmtD, Cart, toast } = App;
+    const params = new URLSearchParams(location.search);
+
+    App.ready.then(({ products }) => {
+      const p = products.find(x => x.id === params.get("id")) || products[0];
+      const m = p.material;
+      let v = p.variants.find(x => x.sku === params.get("sku")) || p.variants.find(x => x.stock > 0) || p.variants[0];
+      document.title = `${p.name} — PLASTEK`;
+      $("#crumbs").innerHTML = `<a href="index.html">Главная</a> / <a href="catalog.html">Каталог</a> / <a href="catalog.html?mat=${encodeURIComponent(p.mat)}">${esc(p.mat)}</a> / ${esc(p.name)}`;
+
+      $("#product").innerHTML = `
+        <div class="product__media" id="media"></div>
+        <div class="product__info">
+          <span class="label">${esc(m.tag || p.mat)}</span>
+          <h1 class="h2">${esc(p.name)}</h1>
+          <p class="muted">${esc(m.desc || "")}</p>
+          <div class="product__price" id="price"></div>
+          <p class="product__opt">Покупаете от ${SITE.tiers[0]} катушек? <a class="link" href="opt.html">Оптовые цены</a></p>
+
+          <div class="option">
+            <h4>Цвет: <span id="color-name"></span></h4>
+            <div class="swatches" id="colors">${p.variants.map(x => `<button class="swatch ${x.stock <= 0 ? "is-out" : ""}" data-sku="${esc(x.sku)}" style="background:${esc(x.hex)}" title="${esc(x.color)}" aria-label="${esc(x.color)}"></button>`).join("")}</div>
+          </div>
+          <div class="option">
+            <h4>Диаметр и вес</h4>
+            <div class="chip-list"><span class="chip is-on" id="dw"></span></div>
+          </div>
+          <div id="stock"></div>
+
+          <div class="buy">
+            <div class="qty">
+              <button type="button" id="minus" aria-label="Меньше">−</button>
+              <input id="qty" value="1" inputmode="numeric" aria-label="Количество">
+              <button type="button" id="plus" aria-label="Больше">+</button>
+            </div>
+            <button class="btn" id="add" style="flex:1">В корзину</button>
+          </div>
+
+          <table class="specs">
+            <tr><td>Материал</td><td>${esc(p.mat)}</td></tr>
+            <tr><td>Диаметр</td><td id="spec-d"></td></tr>
+            <tr><td>Вес нетто</td><td id="spec-w"></td></tr>
+            <tr><td>Температура сопла</td><td>${esc(m.nozzle)} °C</td></tr>
+            <tr><td>Температура стола</td><td>${esc(m.bed)} °C</td></tr>
+            <tr><td>Скорость печати</td><td>${esc(m.speed)} мм/с</td></tr>
+            <tr><td>Закрытая камера</td><td>${esc(m.chamber)}</td></tr>
+            <tr><td>Сушка перед печатью</td><td>${esc(m.dry)}</td></tr>
+            <tr><td>Подходит для</td><td>${esc(m.use)}</td></tr>
+            <tr><td>Упаковка</td><td>Вакуумный пакет с силикагелем</td></tr>
+            <tr><td>Артикул</td><td id="spec-sku"></td></tr>
+          </table>
+          <p class="muted" style="font-size:13px;margin-top:12px">Характеристики — по данным производителя.</p>
+        </div>`;
+
+      function show() {
+        $("#media").innerHTML = spool(v.hex);
+        $("#price").textContent = money(v.price);
+        $("#color-name").textContent = v.color;
+        $("#dw").textContent = `${fmtD(v.d)} мм · ${fmtD(v.w)} кг`;
+        $("#stock").innerHTML = stockLabel(v.stock) + (v.stock <= 0 ? `<p class="muted" style="font-size:13px;margin-top:6px">Можно оформить — привезём с ближайшей поставкой и сообщим срок.</p>` : "");
+        $("#spec-d").textContent = `${fmtD(v.d)} мм ± 0,02`;
+        $("#spec-w").textContent = `${fmtD(v.w)} кг`;
+        $("#spec-sku").textContent = v.sku;
+        $("#add").textContent = v.stock > 0 ? "В корзину" : "Заказать";
+        $$("#colors .swatch").forEach(b => b.classList.toggle("is-on", b.dataset.sku === v.sku));
+        history.replaceState(null, "", `?id=${p.id}&sku=${encodeURIComponent(v.sku)}`);
+      }
+      $("#colors").addEventListener("click", e => {
+        const b = e.target.closest("[data-sku]"); if (!b) return;
+        v = p.variants.find(x => x.sku === b.dataset.sku); show();
+      });
+
+      const q = $("#qty");
+      const clamp = () => { q.value = Math.max(1, Math.min(999, parseInt(q.value) || 1)); };
+      $("#minus").onclick = () => { q.value = +q.value - 1; clamp(); };
+      $("#plus").onclick = () => { q.value = +q.value + 1; clamp(); };
+      q.onchange = clamp;
+      $("#add").onclick = () => { Cart.add(v.sku, +q.value); toast(`${p.name}, ${v.color.toLowerCase()} × ${q.value} — в корзине`); };
+
+      show();
+      $("#related").innerHTML = products.filter(x => x.id !== p.id).slice(0, 4).map(card).join("");
+    });
+  </script>
+</body>
+</html>

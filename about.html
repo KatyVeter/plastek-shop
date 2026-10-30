@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>О компании — PLASTEK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="about" data-subnav="off">
+
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">Главная</a> / О компании</div>
+      <h1 class="h2">О компании</h1>
+    </div>
+  </section>
+
+  <div class="wrap page">
+    <div class="two-col">
+      <div class="prose">
+        <p class="lead" style="margin-bottom:18px">PLASTEK — поставщик филамента из Шэньчжэня.</p>
+        <p>Мы работаем с заводами Южного Китая, отбираем пластик, который печатается стабильно, и продаём его в розницу и оптом. Покупатели — любители 3D-печати, мастерские, студии и магазины.</p>
+        <p>Закупаем напрямую, без посредников, поэтому держим цену ниже рынка. Заказы отправляем за 1–2 рабочих дня.</p>
+        <div class="facts">
+          <div class="fact"><b>3 года</b><span>работаем с заводами</span></div>
+          <div class="fact"><b>20</b><span>человек в команде</span></div>
+          <div class="fact"><b>5 стран</b><span>доставки в СНГ</span></div>
+        </div>
+      </div>
+      <div class="ph ph--wide">Фото склада или упаковки</div>
+    </div>
+
+    <div class="gallery" style="margin-top:56px">
+      <figure><div class="ph">Фото</div><figcaption>Склад</figcaption></figure>
+      <figure><div class="ph">Фото</div><figcaption>Упаковка заказов</figcaption></figure>
+      <figure><div class="ph">Фото</div><figcaption>Команда</figcaption></figure>
+      <figure><div class="ph">Фото</div><figcaption>Отгрузка</figcaption></figure>
+    </div>
+
+    <div class="two-col" style="margin-top:72px" id="contacts">
+      <div>
+        <h2 class="h2" style="margin-bottom:24px">Контакты</h2>
+        <ul class="contact-list" id="contact-list"></ul>
+      </div>
+      <div>
+        <h2 class="h3" style="margin-bottom:16px">Реквизиты</h2>
+        <ul class="contact-list" id="requisites"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    const { $ } = App, S = SITE;
+    $("#contact-list").innerHTML = `
+      <li><span>Телефон</span><a href="tel:${S.phone.replace(/[^\d+]/g, "")}">${S.phone}</a></li>
+      <li><span>Почта</span><a href="mailto:${S.email}">${S.email}</a></li>
+      <li><span>Telegram</span><a href="${S.telegram}" target="_blank" rel="noopener">${S.telegramName}</a></li>
+      <li><span>Instagram</span><a href="${S.instagram}" target="_blank" rel="noopener">${S.instagramName}</a></li>
+      <li><span>Часы работы</span><b>${S.hours}</b></li>
+      <li><span>Офис</span><b>${S.office}</b></li>`;
+    $("#requisites").innerHTML = `
+      <li><span>Продавец</span><b>${S.seller}</b></li>
+      <li><span>Регистрационный номер</span><b>${S.regNo}</b></li>
+      <li><span>Страны доставки</span><b>${S.countries.join(", ")}</b></li>`;
+  </script>
+</body>
+</html>

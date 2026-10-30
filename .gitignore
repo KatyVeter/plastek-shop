@@ -1,0 +1,12 @@
+# Зависимости
+node_modules/
+
+# Секреты и данные покупателей — в репозиторий не попадают
+.env
+.env.*
+server/orders.jsonl
+
+# Локальные настройки
+.claude/settings.local.json
+Thumbs.db
+Desktop.ini

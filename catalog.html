@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Каталог филамента — PLASTEK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="catalog">
+
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">Главная</a> / Каталог</div>
+      <h1 class="h2" id="title">Каталог</h1>
+    </div>
+  </section>
+
+  <div class="wrap catalog">
+    <aside class="filters" id="filters">
+      <div class="filter">
+        <h4>Материал</h4>
+        <div class="chip-list" id="f-mat"></div>
+      </div>
+      <div class="filter">
+        <h4>Цвет</h4>
+        <div class="swatches" id="f-color"></div>
+      </div>
+      <div class="filter">
+        <label class="check"><input type="checkbox" id="f-stock"> Только в наличии</label>
+      </div>
+      <button class="btn btn--ghost btn--sm" id="reset">Сбросить</button>
+    </aside>
+
+    <div>
+      <div class="toolbar">
+        <button class="btn btn--sm filters-toggle" id="toggle">Фильтры</button>
+        <span class="muted" id="count"></span>
+        <select class="select" id="sort" aria-label="Сортировка">
+          <option value="pop">Сначала популярные</option>
+          <option value="asc">Сначала дешевле</option>
+          <option value="desc">Сначала дороже</option>
+        </select>
+      </div>
+      <div class="grid" id="list" data-catalog><div class="loading" style="grid-column:1/-1">Загружаем каталог…</div></div>
+    </div>
+  </div>
+
+  <script src="js/vendor/xlsx.full.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const { $, $$, esc, card, plural } = App;
+    const params = new URLSearchParams(location.search);
+    const state = {
+      mat: new Set(params.get("mat") ? [params.get("mat")] : []),
+      color: new Set(params.get("color") ? [params.get("color")] : []),
+      stock: params.get("stock") === "1",
+      badge: params.get("badge") || "",
+      sort: "pop",
+      q: (params.get("q") || "").trim().toLowerCase()
+    };
+
+    App.ready.then(({ materials, products }) => {
+      $("#f-mat").innerHTML = materials.map(m => `<button class="chip" data-v="${esc(m.id)}">${esc(m.id)}</button>`).join("");
+      // цвета группируем по названию
+      const colors = new Map();
+      products.forEach(p => p.variants.forEach(v => { if (!colors.has(v.color)) colors.set(v.color, v.hex); }));
+      $("#f-color").innerHTML = [...colors].map(([name, hex]) => `<button class="swatch" data-v="${esc(name)}" style="background:${esc(hex)}" title="${esc(name)}" aria-label="${esc(name)}"></button>`).join("");
+
+      function bindToggle(box, set) {
+        $(box).addEventListener("click", e => {
+          const b = e.target.closest("[data-v]"); if (!b) return;
+          set.has(b.dataset.v) ? set.delete(b.dataset.v) : set.add(b.dataset.v);
+          render();
+        });
+      }
+      bindToggle("#f-mat", state.mat);
+      bindToggle("#f-color", state.color);
+      $("#f-stock").addEventListener("change", e => { state.stock = e.target.checked; render(); });
+      $("#sort").addEventListener("change", e => { state.sort = e.target.value; render(); });
+      $("#toggle").addEventListener("click", () => $("#filters").classList.toggle("is-open"));
+      $("#reset").addEventListener("click", () => {
+        state.mat.clear(); state.color.clear(); state.stock = false; state.q = ""; state.badge = "";
+        $("#f-stock").checked = false; render();
+      });
+
+      function render() {
+        $$("#f-mat .chip").forEach(b => b.classList.toggle("is-on", state.mat.has(b.dataset.v)));
+        $$("#f-color .swatch").forEach(b => b.classList.toggle("is-on", state.color.has(b.dataset.v)));
+
+        let items = products.filter(p =>
+          (!state.mat.size || state.mat.has(p.mat)) &&
+          (!state.color.size || p.variants.some(v => state.color.has(v.color))) &&
+          (!state.stock || p.inStock) &&
+          (!state.badge || p.variants.some(v => v.badge === state.badge)) &&
+          (!state.q || (p.name + " " + p.mat + " " + p.variants.map(v => v.color).join(" ")).toLowerCase().includes(state.q))
+        );
+        if (state.sort === "asc") items.sort((a, b) => a.price - b.price);
+        if (state.sort === "desc") items.sort((a, b) => b.price - a.price);
+
+        $("#f-stock").checked = state.stock;
+        $("#title").textContent = state.mat.size === 1 ? [...state.mat][0] : state.q ? `Поиск: ${state.q}` : state.badge === "Хит" ? "Хиты" : state.badge === "Новинка" ? "Новинки" : "Каталог";
+        $("#count").textContent = `${items.length} ${plural(items.length, "товар", "товара", "товаров")}`;
+        $("#list").innerHTML = items.length
+          ? items.map(p => card(p, state.color)).join("")
+          : `<div class="empty" style="grid-column:1/-1">Ничего не нашлось. Уберите часть фильтров.</div>`;
+      }
+      render();
+    });
+  </script>
+</body>
+</html>

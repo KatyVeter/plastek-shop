@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Оптовые цены — PLASTEK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="opt" data-subnav="off">
+
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">Главная</a> / Опт</div>
+      <h1 class="h2">Оптовые цены</h1>
+      <p class="muted">Для магазинов, мастерских, студий и всех, кто печатает много.</p>
+    </div>
+  </section>
+
+  <div class="wrap page">
+    <div class="cards-3" style="margin-top:0">
+      <div class="info-card"><h3 id="t1-title"></h3><p>Цена снижается автоматически в корзине. Отдельно ничего запрашивать не нужно.</p></div>
+      <div class="info-card"><h3>Любые цвета и материалы</h3><p>Считаем общее количество катушек в заказе. 5 PLA и 5 PETG — это уже 10.</p></div>
+      <div class="info-card"><h3>Оплата по счёту</h3><p>Для компаний и ИП. Закрывающие документы — с отгрузкой.</p></div>
+    </div>
+
+    <div class="two-col" style="margin-top:28px;gap:16px">
+      <div class="info-card" style="background:var(--bg-2);border-color:var(--bg-2)">
+        <h3>Менеджер по опту</h3>
+        <p id="manager" style="margin:6px 0 16px"></p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <a class="btn btn--sm" id="mgr-tg" target="_blank" rel="noopener">Написать в Telegram</a>
+          <a class="btn btn--ghost btn--sm" id="mgr-phone">Позвонить</a>
+        </div>
+      </div>
+      <div class="info-card" id="download">
+        <h3>Прайс-лист</h3>
+        <p style="margin:6px 0 16px">Все позиции с ценами и наличием — в Excel.</p>
+        <button class="btn btn--sm" id="dl">Скачать прайс</button>
+      </div>
+    </div>
+
+    <h2 class="h3" style="margin:44px 0 16px">Цена за катушку</h2>
+    <div class="table-wrap" data-catalog>
+      <table class="table">
+        <thead><tr><th>Товар</th><th>Материал</th><th class="num" id="th0"></th><th class="num" id="th1"></th><th class="num" id="th2"></th></tr></thead>
+        <tbody id="prices"><tr><td colspan="5" class="muted">Загружаем цены…</td></tr></tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:14px;margin-top:12px">Цены указаны за катушку 1 кг. Доставка — по тарифу службы.</p>
+
+    <div class="two-col" style="margin-top:64px">
+      <div class="prose">
+        <h2 style="margin-top:0">От 200 катушек</h2>
+        <p>Для больших партий считаем цену отдельно и можем отправить груз напрямую из Китая. Оставьте заявку — пришлём прайс и сроки.</p>
+        <h3>Что указать в заявке</h3>
+        <ul>
+          <li>материалы и цвета;</li>
+          <li>примерный объём в месяц;</li>
+          <li>город доставки;</li>
+          <li>реквизиты, если нужна оплата по счёту.</li>
+        </ul>
+      </div>
+      <form class="form form--2" id="lead">
+        <input class="field" name="name" required placeholder="Имя">
+        <input class="field" name="company" placeholder="Компания">
+        <input class="field" name="phone" type="tel" required placeholder="Телефон">
+        <input class="field" name="email" type="email" required placeholder="E-mail">
+        <input class="field full" name="inn" placeholder="БИН / УНП / ИНН компании (для счёта)">
+        <textarea class="field full" name="comment" rows="4" placeholder="Материалы, цвета, объём, город"></textarea>
+        <label class="check consent full"><input type="checkbox" required> Согласен с <a href="privacy.html" target="_blank">обработкой персональных данных</a></label>
+        <button class="btn full">Отправить заявку</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/vendor/xlsx.full.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const { $, money, esc } = App;
+    const [T1, T2] = SITE.tiers;
+    $("#t1-title").textContent = `От ${T1} катушек`;
+    $("#th0").textContent = `1–${T1 - 1} шт.`;
+    $("#th1").textContent = `от ${T1} шт.`;
+    $("#th2").textContent = `от ${T2} шт.`;
+    $("#lead").addEventListener("submit", e => {
+      e.preventDefault();
+      // TODO: отправка заявки на почту / в Telegram / CRM
+      App.toast("Заявка отправлена. Ответим в течение рабочего дня");
+      e.target.reset();
+    });
+    $("#manager").textContent = `${SITE.optManager} — ответит в Telegram ${SITE.optTelegramName} или по телефону ${SITE.optPhone}. ${SITE.hours}.`;
+    $("#mgr-tg").href = SITE.optTelegram;
+    $("#mgr-phone").href = "tel:" + SITE.optPhone.replace(/[^\d+]/g, "");
+
+    App.ready.then(({ products }) => {
+      $("#dl").onclick = () => {
+        const rows = [["Артикул", "Товар", "Цвет", "Диаметр, мм", "Вес, кг", `1–${T1 - 1} шт., $`, `от ${T1} шт., $`, `от ${T2} шт., $`, "Наличие"]];
+        products.forEach(p => p.variants.forEach(v => rows.push([v.sku, p.name, v.color, v.d, v.w, v.price, v.opt1, v.opt2, v.stock > 0 ? (v.stock <= 5 ? "мало" : "есть") : "под заказ"])));
+        const ws = XLSX.utils.aoa_to_sheet(rows);
+        ws["!cols"] = [12, 14, 18, 12, 8, 14, 14, 14, 12].map(w => ({ wch: w }));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Прайс");
+        XLSX.writeFile(wb, `PLASTEK-прайс-${new Date().toLocaleDateString("ru-RU")}.xlsx`);
+      };
+      $("#prices").innerHTML = products.map(p => {
+        const v = p.variants[0];
+        return `<tr><td><a class="link" href="product.html?id=${p.id}">${esc(p.name)}</a></td><td>${esc(p.mat)}</td>
+          <td class="num">${money(v.price)}</td><td class="num">${money(v.opt1)}</td><td class="num best">${money(v.opt2)}</td></tr>`;
+      }).join("");
+    });
+  </script>
+</body>
+</html>

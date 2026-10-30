@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Личный кабинет — PLASTEK</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="account" data-subnav="off">
+
+  <section class="page-head">
+    <div class="wrap">
+      <div class="crumbs"><a href="index.html">Главная</a> / Личный кабинет</div>
+      <h1 class="h2">Личный кабинет</h1>
+    </div>
+  </section>
+
+  <div class="wrap page" id="root"></div>
+
+  <script src="js/app.js"></script>
+  <script>
+    // Шаблон: вход и заказы хранятся в браузере. На рабочем сайте — сервер и база.
+    const { $, money, esc, Account, Cart, toast } = App;
+    let mode = "login";
+
+    function renderAuth() {
+      $("#root").innerHTML = `
+        <div class="auth">
+          <div class="tabs-inline">
+            <button data-mode="login" class="${mode === "login" ? "is-on" : ""}">Вход</button>
+            <button data-mode="register" class="${mode === "register" ? "is-on" : ""}">Регистрация</button>
+          </div>
+          <form class="form" id="auth">
+            ${mode === "register" ? `<input class="field" name="name" required placeholder="Имя и фамилия"><input class="field" name="phone" type="tel" placeholder="Телефон">` : ""}
+            <input class="field" name="email" type="email" required placeholder="E-mail">
+            <input class="field" name="password" type="password" required placeholder="Пароль" autocomplete="${mode === "login" ? "current-password" : "new-password"}">
+            ${mode === "register" ? `<label class="check consent"><input type="checkbox" required> Согласен с <a href="privacy.html" target="_blank">обработкой персональных данных</a></label>` : ""}
+            <button class="btn btn--block">${mode === "login" ? "Войти" : "Зарегистрироваться"}</button>
+            ${mode === "login" ? `<a class="muted" href="#" style="font-size:14px;text-align:center" onclick="App.toast('Ссылка для сброса пароля придёт на почту');return false">Забыли пароль?</a>` : ""}
+          </form>
+          <p class="muted" style="font-size:13px;margin-top:20px;text-align:center">Кабинет создаётся и при первом заказе — по e-mail из формы.</p>
+        </div>`;
+      $(".tabs-inline").onclick = e => { const b = e.target.closest("[data-mode]"); if (b) { mode = b.dataset.mode; renderAuth(); } };
+      $("#auth").onsubmit = e => {
+        e.preventDefault();
+        const d = Object.fromEntries(new FormData(e.target));
+        // TODO: проверка пароля на сервере. Пароль в браузере не сохраняем.
+        Account.login({ name: d.name || d.email.split("@")[0], email: d.email, phone: d.phone || "" });
+        render();
+      };
+    }
+
+    function renderAccount(u) {
+      const orders = Account.orders();
+      $("#root").innerHTML = `
+        <div class="account">
+          <aside class="account__side">
+            <h3 class="h3">${esc(u.name)}</h3>
+            <p class="muted" style="font-size:14px;margin:6px 0 18px">${esc(u.email)}${u.phone ? "<br>" + esc(u.phone) : ""}</p>
+            <button class="btn btn--ghost btn--sm btn--block" id="logout">Выйти</button>
+          </aside>
+          <div>
+            <h2 class="h3" style="margin-bottom:16px">Мои заказы</h2>
+            ${orders.length ? orders.map(o => `
+              <div class="order">
+                <div class="order__head"><b>Заказ № ${esc(o.id)} от ${esc(o.date)}</b><span class="status">${esc(o.status)}</span></div>
+                <p class="muted" style="font-size:14px">${o.lines.map(l => `${esc(l.name)} × ${l.qty}`).join("; ")}</p>
+                <div class="order__head" style="margin:12px 0 0;align-items:center"><b>${money(o.sum)}</b><button class="btn btn--sm btn--ghost" data-repeat="${esc(o.id)}">Повторить заказ</button></div>
+              </div>`).join("")
+            : `<div class="empty">Заказов пока нет. <a class="link" href="catalog.html">Перейти в каталог</a></div>`}
+          </div>
+        </div>`;
+      $("#logout").onclick = () => { Account.logout(); render(); };
+      $("#root").onclick = e => {
+        const id = e.target.dataset.repeat; if (!id) return;
+        const o = orders.find(x => x.id === id);
+        o.lines.forEach(l => Cart.add(l.sku, l.qty));
+        toast("Товары из заказа добавлены в корзину");
+      };
+    }
+
+    function render() { const u = Account.user(); u ? renderAccount(u) : renderAuth(); }
+    render();
+  </script>
+</body>
+</html>
