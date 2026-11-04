@@ -23,97 +23,53 @@
   <div class="deck__track">
 
   <!-- 1. Главная -->
-  <!-- Раскладка по референсу: крупный заголовок слева заходит на фото, короткий абзац и ссылка,
-       внизу — строка фактов «подпись / значение» -->
-  <section class="slide mhero" id="home" data-title="Главная">
-    <figure class="mhero__photo">
-      <!-- ВРЕМЕННОЕ ФОТО из концепта (img/hero-spool.png). Заменить реальной съёмкой своей катушки -->
-      <div class="mhero__img" role="img" aria-label="Катушка филамента PLA Matte"></div>
-      <figcaption><a id="hero-tag" href="catalog.html?mat=PLA%20Matte">На фото: PLA Matte</a></figcaption>
-    </figure>
-
-    <div class="mhero__text">
-      <h1 class="mhero__title">От одной<br>катушки<br>до паллеты</h1>
-      <p class="mhero__lead">Филамент PLA, PETG, ABS и TPU с заводов Шэньчжэня. Диаметр 1,75 мм — для Bambu Lab, Creality, Prusa и других принтеров.</p>
-    </div>
-
-    <div class="mhero__bottom">
-      <div class="mhero__links">
-        <a class="ulink" href="catalog.html">Перейти в каталог</a>
-        <a class="ulink ulink--muted" href="opt.html">Оптовые цены</a>
-      </div>
-      <dl class="mhero__facts">
-        <div><dt>Цена</dt><dd id="hero-price">от $13.90</dd></div>
-        <div><dt>Опт</dt><dd id="hero-opt">от 10 шт. — дешевле</dd></div>
-        <div><dt>Ассортимент</dt><dd id="stat-mats">7 материалов</dd></div>
-        <div><dt>Доставка</dt><dd>5 стран СНГ</dd></div>
-      </dl>
-    </div>
-  </section>
-
-  <!-- 2. Подбор материала -->
-  <section class="slide section" id="materials" data-title="Материалы">
-    <div class="wrap">
-      <div class="section__head">
-        <h2 class="h2">Какой пластик выбрать</h2>
-        <p class="muted">Выберите задачу — покажем подходящие материалы.</p>
-      </div>
-      <div class="chooser" data-catalog>
-        <div class="chooser__tasks" id="tasks"></div>
-        <div class="chooser__result" id="picks"><div class="loading">Загружаем каталог…</div></div>
-      </div>
-      <div class="mat-all" id="mat-all"></div>
-    </div>
-  </section>
-
-  <!-- 3. Популярное и все цвета -->
-  <section class="slide section" id="popular" data-title="Популярное">
-    <div class="wrap">
-      <div class="section__head">
-        <h2 class="h2">Популярное</h2>
-        <a class="link" href="catalog.html">Весь каталог</a>
-      </div>
-      <div class="grid" id="popular-list" data-catalog></div>
-      <div class="colors-inline" id="colors">
-        <div class="colors-band__title"><b id="colors-count">Цвета</b><span>в каталоге</span></div>
-        <div class="colors-row" id="colors-row" data-catalog></div>
+  <!-- Первый слайд: фото на весь экран (img/hero-blue.webp), поверх слева — заголовок, абзац и две кнопки -->
+  <section class="slide bhero" id="home" data-title="Главная">
+    <div class="bhero__photo" role="img" aria-label="Катушка синего филамента крупным планом"></div>
+    <div class="wrap bhero__inner">
+      <div class="bhero__text">
+        <h1 class="bhero__title">От одной<br>катушки<br>до паллеты</h1>
+        <p class="bhero__lead">Филамент PLA, PETG, ABS и TPU с заводов Шэньчжэня. Диаметр 1,75&nbsp;мм — для Bambu Lab, Creality, Prusa и других принтеров.</p>
+        <div class="bhero__btns">
+          <a class="bbtn bbtn--dark" href="catalog.html">Подобрать пластик <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
+          <a class="bbtn bbtn--line" href="catalog.html">Каталог</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 4. Опт -->
+  <!-- 3. Знакомство: приветствие и пара слов о компании, справа фото Шэньчжэня в дуге (img/shenzhen-arc.jpg) -->
+  <section class="slide wslide" id="welcome" data-title="Знакомство">
+    <img class="wslide__photo" src="img/shenzhen-arc.jpg" alt="Шэньчжэнь — город, где работает компания" loading="lazy">
+    <div class="wrap wslide__inner">
+      <div class="wslide__text">
+        <h2 class="wslide__title">Приветствуем тебя,<br><span>дорогой покупатель</span></h2>
+        <i class="wslide__bar" aria-hidden="true"></i>
+        <p class="wslide__sub">Перед тем как сделать свой заказ, расскажем о нашей компании</p>
+        <p class="wslide__p"><b>Мы находимся в Китае, в Шэньчжэне.</b><br>Создаём возможность выгоднее всего приобрести филаменты для вашего любимого дела, работы.</p>
+        <p class="wslide__p"><b>Пластик проходит тщательную проверку, сортировку и упаковку.</b></p>
+        <p class="wslide__accent">Для ОПТовиков — выгодные сделки и скидки.</p>
+        <a class="pill" href="catalog.html">Перейти в каталог <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12h17M14 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Опт: слева условия, лесенка цен, менеджер и прайс; справа мини-каталог всех филаментов -->
   <section class="slide section slide--center" id="opt" data-title="Опт">
-    <div class="wrap">
-      <div class="opt-teaser">
-        <div>
-          <h2 class="h2">Опт от 10 катушек</h2>
-          <p>Когда в корзине 10 катушек и больше, цена снижается сама. Цвета и материалы можно смешивать. Компаниям выставляем счёт.</p>
-          <p id="opt-manager"></p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap">
-            <a class="btn" href="opt.html">Все оптовые цены</a>
-            <a class="btn" href="opt.html#download" style="background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)">Скачать прайс</a>
-          </div>
+    <div class="wrap opt-slide">
+      <div class="opt-slide__text">
+        <h2 class="h2">Опт от 10 катушек</h2>
+        <p>Цена снижается сама, когда в корзине 10 катушек и больше. Цвета и материалы можно смешивать. Отправляем из Шэньчжэня в 5 стран СНГ, компаниям выставляем счёт.</p>
+        <div class="tiers tiers--light" id="tiers"></div>
+        <p class="opt-manager" id="opt-manager"></p>
+        <div class="opt-btns">
+          <a class="btn" href="opt.html">Все оптовые цены</a>
         </div>
-        <div class="tiers" id="tiers"></div>
       </div>
-    </div>
-  </section>
-
-  <!-- 5. О нас: на фоне точечная карта с Шэньчжэнем и маршрутами в страны доставки (рисуется скриптом ниже) -->
-  <section class="slide section about-map-section slide--center" id="about" data-title="О нас">
-    <svg class="about-map" id="about-map" viewBox="0 0 1090 610" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"></svg>
-    <div class="wrap about-band about-band--map">
-      <div class="about-band__text">
-        <p class="label">О нас</p>
-        <h2 class="h2" style="margin-top:10px">Поставщик из Шэньчжэня</h2>
-        <p>Работаем с заводами Южного Китая напрямую и отбираем пластик, который стабильно печатается. Продаём любителям, мастерским, студиям и магазинам.</p>
-        <div class="nums nums--compact">
-          <div><b>3 года</b><span>работаем с заводами</span></div>
-          <div><b>20</b><span>человек в команде</span></div>
-          <div><b>5 стран</b><span>доставки в СНГ</span></div>
-          <div><b id="sku-count">28</b><span>позиций в каталоге</span></div>
-        </div>
-        <p style="margin-top:24px"><a class="link" href="about.html">Подробнее о компании</a></p>
+      <!-- мини-каталог: строится из data/catalog.xlsx скриптом ниже -->
+      <div class="mini-cat" data-catalog>
+        <div class="mini-cat__head"><b>Филаменты</b><span>цена за катушку 1 кг</span><a class="link" href="catalog.html">Весь каталог</a></div>
+        <div class="mini-cat__list" id="mini-cat"><div class="loading">Загружаем каталог…</div></div>
       </div>
     </div>
   </section>
@@ -215,66 +171,14 @@
   <script src="js/app.js"></script>
   <script src="js/deck.js"></script>
   <script>
-    const { $, money, esc, spool, card, icon } = App;
-
-    // первый экран: три катушки
-
-    // Точечная карта для блока «О нас». Каждая строка — «номер ряда: отрезки суши».
-    // Сетка 1,2°: долгота 20–150°, широта 72–0°. Получено из Natural Earth (world-atlas, land-50m)
-    const MAP = "0:27-29,41-43,46-47,49-50,53-90,100-104,106-108|1:4,29-31,40-43,46-51,53-108|2:0-10,34-36,40-43,45-108|3:0-15,20-21,28,30-32,34-44,46-47,49-108|4:0-17,20-21,24-43,45-108|5:0-12,18-108|6:0,4-12,14-15,18-108|7:3-108|8:1-108|9:2-108|10:3,9-108|11:3-101|12:2,4-99|13:1-98|14:2-96|15:0-97,99-100|16:0-102|17:0-100,102|18:0-100,102-103|19:0-100,102|20:0-99,102|21:0-14,16-25,28-98,102|22:0-8,11-12,15-22,28-97|23:0-7,16-22,26-96,102|24:0-6,17-22,27-95,102-104|25:0-6,19-23,29-91|26:0-3,5-6,8-24,28-91,101|27:1-2,6-24,28-82,85,88-89,101|28:1,3,5-24,29-81,88-90,100-101|29:2,7-25,29-82,84-85,89-91,99-100|30:14-83,89-91,97-100|31:11,14-82,89-90,94-99|32:13-83,92-95|33:1-2,13-84,93|34:1-6,9-10,12-84|35:0-23,26-84|36:0-23,26-84|37:0-11,13-24,28-83|38:0-11,14-25,31-83|39:0-12,15-26,30,35,39-82|40:0-13,16-30,40-81,84|41:0-13,16-32,42-77,79,84|42:0-14,16-32,42-56,61-73,75-76|43:0-14,17-32,45-55,61-72,75|44:0-14,18-31,45-54,62-71,74-75|45:0-15,19-30,45-52,63-72,84-85|46:0-15,19-28,45-51,62-72,84-85|47:0-17,19-26,45-50,65-73,84|48:0-17,20-24,46-50,65-74|49:0-18,20-21,46-50,66,68-74,84|50:0-19,47-49,66,69-74,86|51:0-19,23-25,47-49,66,70-73,85-86|52:0-25,48-49,66,71-72,82,88|53:0-25,48,50-51,66,86-88|54:0-24,50-51,67,81,85,87-88|55:0-24,67-68,81,88|56:0-23,63-64,68-69,79-81|57:0-22,65,68-69,78-80|58:0-21,65-66,69,77-81|59:0-20,66-68,75-82";
-    (function drawMap() {
-      const cell = 10, step = 1.2;
-      const P = (lon, lat) => [((lon - 20) / step) * cell + cell / 2, ((72 - lat) / step) * cell + cell / 2];
-      // Края карты «рассеиваются»: чем дальше точка от центра, тем реже и мельче точки.
-      // Случайность детерминированная (по координатам), поэтому рисунок не меняется между загрузками
-      const CX = 600, CY = 290, RX = 560, RY = 330;
-      const rnd = (x, y) => (((x * 73856093) ^ (y * 19349663)) >>> 0) % 1000 / 1000;
-      const sizes = ["", "", ""]; // три слоя: крупные, средние, мелкие точки
-      MAP.split("|").forEach(row => {
-        const [y, runs] = row.split(":");
-        runs.split(",").forEach(run => {
-          const [a, b = a] = run.split("-").map(Number);
-          for (let x = a; x <= b; x++) {
-            const px = x * cell + 5, py = +y * cell + 5;
-            const d = Math.hypot((px - CX) / RX, (py - CY) / RY); // 0 — центр, 1 — край эллипса
-            const fade = Math.min(1, Math.max(0, (d - 0.5) / 0.5));  // 0 внутри, 1 у края
-            if (rnd(x, +y) < fade * 0.95) continue;                  // к краю точки выпадают
-            sizes[fade < 0.25 ? 0 : fade < 0.6 ? 1 : 2] += `M${px} ${py}h0`;
-          }
-        });
-      });
-      const land = `<path class="land" d="${sizes[0]}"/><path class="land land--md" d="${sizes[1]}"/><path class="land land--sm" d="${sizes[2]}"/>`;
-      const hub = P(114.06, 22.54); // Шэньчжэнь
-      // города доставки (без России)
-      const cities = [["Минск", 27.56, 53.9], ["Ереван", 44.51, 40.18], ["Ташкент", 69.24, 41.3], ["Алматы", 76.95, 43.24], ["Астана", 71.43, 51.13]];
-      const routes = cities.map(([name, lon, lat], i) => {
-        const [x, y] = P(lon, lat), mx = (hub[0] + x) / 2, my = Math.min(hub[1], y) - 60 - i * 8;
-        return `<path class="route" d="M${hub[0]} ${hub[1]} Q${mx} ${my} ${x} ${y}" style="animation-delay:${i * 0.3}s"/>
-          <circle class="city" cx="${x}" cy="${y}" r="5"/><text class="city-label" x="${x}" y="${y - 14}" text-anchor="middle">${name}</text>`;
-      }).join("");
-      const svg = $("#about-map");
-      svg.innerHTML = `<defs>
-          <radialGradient id="map-fade" cx="${CX}" cy="${CY}" r="${RX}" gradientUnits="userSpaceOnUse" gradientTransform="translate(${CX} ${CY}) scale(1 ${RY / RX}) translate(${-CX} ${-CY})">
-            <stop offset="0.45" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
-          </radialGradient>
-          <mask id="map-mask"><rect width="1090" height="610" fill="url(#map-fade)"/></mask>
-        </defs>
-        <g mask="url(#map-mask)">${land}</g>${routes}
-        <circle class="hub-pulse" cx="${hub[0]}" cy="${hub[1]}" r="10"/>
-        <circle class="hub" cx="${hub[0]}" cy="${hub[1]}" r="10"/>
-        <g class="hub-label" transform="translate(${hub[0]} ${hub[1] + 52})"><rect x="-120" y="-30" width="240" height="44" rx="12"/><text x="0" y="0" text-anchor="middle">Шэньчжэнь · склад</text></g>`;
-      // на телефоне — крупный кадр только с маршрутами
-      const mq = matchMedia("(max-width: 860px)");
-      const frame = () => svg.setAttribute("viewBox", mq.matches ? "150 120 820 420" : "0 0 1090 610");
-      frame(); mq.addEventListener("change", frame);
-    })();
+    const { $, money, esc, icon, spool, showcase } = App;
 
     $("#tg-btn").href = SITE.telegram;
     $("#tg-btn").innerHTML = `${icon.tg} Написать ${esc(SITE.telegramName)}`;
     $("#countries").innerHTML = SITE.countries.map(c => `<span class="chip">${esc(c)}</span>`).join("");
     $("#slide-foot").innerHTML = `${esc(SITE.email)} · ${esc(SITE.hours)}<br>
       <a href="offer.html">Оферта</a> · <a href="privacy.html">Конфиденциальность</a> · <a href="about.html#contacts">Контакты и реквизиты</a>`;
-    $("#opt-manager").innerHTML = `Менеджер по опту — ${esc(SITE.optManager)}, <a href="${SITE.optTelegram}" target="_blank" rel="noopener" style="text-decoration:underline">${esc(SITE.optTelegramName)}</a>`;
+    $("#opt-manager").innerHTML = `Менеджер по опту — ${esc(SITE.optManager)}: <a href="${SITE.optTelegram}" target="_blank" rel="noopener">${esc(SITE.optTelegramName)}</a> · ${esc(SITE.optPhone)}`;
 
     $("#subscribe").addEventListener("submit", e => {
       e.preventDefault();
@@ -283,73 +187,28 @@
       e.target.reset();
     });
 
-    // задачи → материалы (названия материалов — как в Excel, лист «Материалы»)
-    const TASKS = [
-      { t: "Первая печать", s: "прототипы, макеты", mats: ["PLA", "PLA+"] },
-      { t: "Фигурки и декор", s: "красиво без обработки", mats: ["PLA Matte", "Silk PLA"] },
-      { t: "Прочные детали", s: "крепёж, корпуса", mats: ["PETG", "PLA+"] },
-      { t: "Нагрев и улица", s: "авто, техника, солнце", mats: ["ABS", "PETG"] },
-      { t: "Гибкие детали", s: "уплотнители, чехлы", mats: ["TPU 95A"] }
-    ];
-
-    App.ready.then(({ materials, products }) => {
-      // первый экран: минимальная цена, оптовая цена от 10 шт., товар на фото, число материалов, цвета
-      const cheapest = products.reduce((a, b) => a.price <= b.price ? a : b);
-      $("#hero-price").textContent = `от ${money(cheapest.price)} за катушку`;
-      const opt1 = Math.min(...cheapest.variants.map(v => v.opt1 || v.price));
-      $("#hero-opt").textContent = `от ${SITE.tiers[0]} шт. — ${money(opt1)}`;
-      $("#stat-mats").textContent = `${materials.length} ${App.plural(materials.length, "материал", "материала", "материалов")}`;
-      const pp = products.find(p => p.mat === "PLA Matte");
-      const pv = pp && pp.variants.find(v => /хаки/i.test(v.color));
-      if (pv) { $("#hero-tag").href = `product.html?id=${pp.id}&sku=${encodeURIComponent(pv.sku)}`; $("#hero-tag").textContent = `На фото: ${pp.name}, ${pv.color.toLowerCase()} — ${money(pv.price)}`; }
-      $("#sku-count").textContent = products.reduce((s, p) => s + p.variants.length, 0);
-
-      // лента цветов: уникальные цвета из Excel, клик — каталог с этим цветом
-      const colors = new Map();
-      products.forEach(p => p.variants.forEach(v => { if (!colors.has(v.hex.toLowerCase())) colors.set(v.hex.toLowerCase(), v.color); }));
-      $("#colors-count").textContent = `${colors.size} ${App.plural(colors.size, "цвет", "цвета", "цветов")}`;
-      $("#stat-mats").textContent += `, ${colors.size} ${App.plural(colors.size, "цвет", "цвета", "цветов")}`;
-      $("#colors-row").innerHTML =[...colors].map(([hex, name]) => `<a href="catalog.html?color=${encodeURIComponent(name)}" style="background:${esc(hex)}" title="${esc(name)}" aria-label="${esc(name)}"></a>`).join("");
-
-      const prodOf = id => products.find(p => p.mat === id);
-      const pickHtml = id => {
-        const m = materials.find(x => x.id === id), p = prodOf(id);
-        if (!m) return "";
-        const hex = p ? App.showcase(p).hex : "#c9a24a";
-        return `<div class="pick">
-          ${spool(hex)}
-          <div>
-            <div class="pick__name">${esc(m.id)}</div>
-            <div class="pick__tag">${esc(m.tag)}</div>
-            <p>${esc(m.desc)}</p>
-            <ul>
-              <li><span>Сопло:</span> ${esc(m.nozzle)} °C · <span>стол:</span> ${esc(m.bed)} °C</li>
-              <li><span>Закрытая камера:</span> ${esc(String(m.chamber).toLowerCase())}</li>
-            </ul>
-            <div class="pick__foot">
-              ${p ? `<span class="price">от ${money(p.price)}</span><a class="btn btn--sm" href="product.html?id=${p.id}">Выбрать цвет</a>` : ""}
-            </div>
-          </div>
-        </div>`;
-      };
-      let cur = 0;
-      function renderTasks() {
-        $("#tasks").innerHTML = TASKS.map((x, i) => `<button class="task ${i === cur ? "is-on" : ""}" data-i="${i}">${icon.spoolLine}<span>${x.t}<small>${x.s}</small></span></button>`).join("");
-        $("#picks").innerHTML = TASKS[cur].mats.map(pickHtml).join("");
-      }
-      $("#tasks").addEventListener("click", e => { const b = e.target.closest("[data-i]"); if (b) { cur = +b.dataset.i; renderTasks(); } });
-      renderTasks();
-      $("#mat-all").innerHTML = `<span>Все материалы:</span>` + materials.map(m => `<a class="chip" href="catalog.html?mat=${encodeURIComponent(m.id)}">${esc(m.id)}</a>`).join("");
-
-      const popular = products.filter(p => p.badge).concat(products.filter(p => !p.badge)).slice(0, 4);
-      $("#popular-list").innerHTML = popular.map(card).join("");
-
+    // слайд «Опт»: лесенка цен по первому товару и мини-каталог всех филаментов
+    App.ready.then(({ products }) => {
       const v = products[0].variants[0];
       const [t1, t2] = SITE.tiers;
       $("#tiers").innerHTML = `
         <div class="tier"><span>${esc(products[0].name)}, 1–${t1 - 1} шт.</span><b>${money(v.price)}</b></div>
         <div class="tier"><span>от ${t1} шт.</span><b>${money(v.opt1)}</b></div>
         <div class="tier"><span>от ${t2} шт.</span><b>${money(v.opt2)}</b></div>`;
+
+      $("#mini-cat").innerHTML = products.map(p => {
+        const sv = showcase(p);
+        const seen = new Set();
+        const dots = p.variants.filter(x => !seen.has(x.hex) && seen.add(x.hex)).slice(0, 7)
+          .map(x => `<i style="background:${esc(x.hex)}" title="${esc(x.color)}"></i>`).join("");
+        const opt = Math.min(...p.variants.map(x => x.opt1 || x.price));
+        return `<a class="mini-cat__row" href="product.html?id=${p.id}&sku=${encodeURIComponent(sv.sku)}">
+          <span class="mini-cat__img">${spool(sv.hex)}</span>
+          <span class="mini-cat__name"><b>${esc(p.name)}</b><span class="mini-cat__dots">${dots}</span></span>
+          <span class="mini-cat__price"><small>Розница</small><b>${money(p.price)}</b></span>
+          <span class="mini-cat__price mini-cat__price--opt"><small>Опт от ${SITE.tiers[0]} шт.</small><b>${money(opt)}</b></span>
+        </a>`;
+      }).join("");
     });
   </script>
 </body>

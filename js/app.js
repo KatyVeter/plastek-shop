@@ -215,7 +215,6 @@ window.SITE = {
       <a class="logo" href="index.html" aria-label="${S.brand} — на главную"><span class="logo__mark">${S.brand[0]}</span>${S.brand}</a>
       <nav class="nav nav--left" aria-label="Основное меню">
         <a href="catalog.html" class="nav__drop ${act("catalog")}" data-mega="catalog" aria-haspopup="true" aria-expanded="false">Каталог ${icon.chevron}</a>
-        <a href="index.html#materials">Подбор пластика</a>
         <a href="opt.html" class="nav__drop ${act("opt")}" data-mega="opt" aria-haspopup="true" aria-expanded="false">Опт ${icon.chevron}</a>
         <a href="delivery.html" class="nav__drop ${act("delivery")}" data-mega="delivery" aria-haspopup="true" aria-expanded="false">Доставка ${icon.chevron}</a>
         <a href="about.html" class="${act("about")}">О компании</a>
@@ -236,7 +235,6 @@ window.SITE = {
     </div>
     <div class="mnav" id="mnav">
       <details class="mnav__cat"><summary>Каталог ${icon.chevron}</summary><div id="mnav-cat"><div class="loading" style="padding:20px">Загружаем…</div></div></details>
-      <a href="index.html#materials">Подбор пластика</a>
       <a href="opt.html">Опт и оптовые цены</a>
       <a href="delivery.html">Доставка и оплата</a>
       <a href="about.html">О компании</a>
@@ -358,7 +356,7 @@ window.SITE = {
         <a class="chip" href="catalog.html?badge=${encodeURIComponent("Новинка")}">Новинки</a>
         <a class="chip" href="catalog.html?badge=${encodeURIComponent("Хит")}">Хиты</a>
         <a class="chip" href="catalog.html?stock=1">В наличии</a>
-        <a class="chip" href="index.html#colors">Все ${colors} ${plural(colors, "цвет", "цвета", "цветов")}</a>
+        <a class="chip" href="catalog.html">Все ${colors} ${plural(colors, "цвет", "цвета", "цветов")}</a>
         <a class="link" href="catalog.html" style="margin-left:auto">Весь каталог</a>
       </div>`;
   }
@@ -429,7 +427,7 @@ window.SITE = {
       header.classList.remove("is-open");
       if (on) $(".hsearch input").focus();
     });
-    // пункты меню в бургере закрывают его (например, якорь «Подбор пластика» на той же странице)
+    // пункты меню в бургере закрывают его (на случай якорных ссылок на той же странице)
     $$("#mnav a").forEach(a => a.addEventListener("click", () => header.classList.remove("is-open")));
   }
 

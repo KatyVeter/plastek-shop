@@ -18,7 +18,8 @@
   const [countFrom, countTo] = count.querySelectorAll("b");
   const countBar = count.querySelector("span");
   // старые ссылки на блоки, которые теперь живут внутри слайдов
-  const ALIASES = { colors: "popular", club: "faq" };
+  // (старые ссылки на убранные слайды: «Материалы» → «Главная», «Популярное» → «Знакомство», «О нас» → «Опт»)
+  const ALIASES = { materials: "home", colors: "welcome", popular: "welcome", about: "opt", club: "faq" };
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const pad = n => String(n).padStart(2, "0");
   let current = -1, lockUntil = 0;
@@ -48,7 +49,7 @@
     prev.setAttribute("aria-label", p ? `Назад: ${p.dataset.title}` : "Это первый раздел");
     next.setAttribute("aria-label", n ? `Далее: ${n.dataset.title}` : "Это последний раздел");
     // подпись под стрелками ведёт вперёд; на последнем слайде — назад к началу
-    nextLabel.querySelector("span").textContent = n ? `+ ${n.dataset.title}` : "↺ В начало";
+    nextLabel.querySelector("span").textContent = n ? `Далее: ${n.dataset.title}` : "↺ В начало";
     nextLabel.setAttribute("aria-label", n ? `Далее: ${n.dataset.title}` : "Вернуться к началу");
 
     countFrom.textContent = pad(i + 1);
@@ -62,7 +63,7 @@
   next.addEventListener("click", () => go(current + 1));
   nextLabel.addEventListener("click", () => go(current === slides.length - 1 ? 0 : current + 1));
 
-  // ссылки вида index.html#opt и #colors внутри страницы
+  // ссылки вида index.html#opt внутри страницы
   addEventListener("hashchange", () => go(indexOf(location.hash.slice(1)), { updateHash: false }));
 
   // клавиатура (кроме полей ввода)

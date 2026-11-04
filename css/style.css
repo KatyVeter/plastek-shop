@@ -174,30 +174,79 @@ button { cursor: pointer; background: none; border: 0; }
 .mnav__item:last-child { padding-bottom: 16px; border-bottom: 1px solid var(--line); }
 .colors-band { scroll-margin-top: 80px; }
 
-/* ---------- Первый слайд (раскладка по референсу) ---------- */
-/* Сетка: заголовок слева заходит на фото; фото справа; внизу ссылки и строка фактов */
-.mhero {
-  position: relative; display: grid; grid-template-columns: 38% 1fr; grid-template-rows: 1fr auto;
-  padding: 0 112px 0 84px; background: #fff;
+/* ---------- Первый слайд: текст слева, крупное фото катушки справа ---------- */
+.bhero { position: relative; overflow: hidden; background: #fff; display: flex; align-items: center; }
+/* фото на весь слайд: катушка справа, белый фон слева — уже на самом снимке */
+.bhero__photo { position: absolute; inset: 0; background: #fff url(../img/hero-blue.webp) right center / cover no-repeat; }
+/* текст выровнен по логотипу в шапке — тот же контейнер, что у шапки */
+.deck .wrap.bhero__inner { position: relative; z-index: 1; width: 100%; max-width: 1360px; padding-left: 24px; padding-right: 24px; }
+/* размеры привязаны к ширине экрана — пропорции как в макете */
+.bhero__text { padding: 40px 0; }
+/* лёгкое белое свечение — заголовок читается, даже если заходит на фото */
+.bhero__title { font-size: clamp(44px, 4.6vw, 84px); font-weight: 800; line-height: 1; letter-spacing: -0.045em; text-shadow: 0 0 28px rgba(255,255,255,.9); }
+.bhero__lead { max-width: clamp(320px, 27vw, 480px); margin: 1.9vw 0 3.4vw; font-size: clamp(16px, 1.25vw, 22px); line-height: 1.55; color: #222; }
+.bhero__btns { display: flex; gap: clamp(14px, 1.8vw, 32px); flex-wrap: wrap; }
+.bbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: clamp(52px, 4vw, 70px); padding: 0 clamp(24px, 2.3vw, 40px);
+  border-radius: 10px; font-size: clamp(15px, 1.15vw, 20px); font-weight: 600; transition: background .2s, color .2s, transform .2s;
 }
-.mhero__photo { grid-column: 2; grid-row: 1; position: relative; margin: 72px 0 36px; min-height: 0; }
-.mhero__img { position: absolute; inset: 0; background: url(../img/hero-spool.png) 40% 55% / cover no-repeat; filter: grayscale(1) contrast(1.05); }
-.mhero__photo figcaption { position: absolute; right: 0; bottom: -26px; font-size: 12px; color: var(--muted); }
-.mhero__photo figcaption a:hover { color: var(--text); }
-/* без z-index: иначе у блока свой слой и режим наложения заголовка не видит фон и фото */
-.mhero__text { grid-column: 1; grid-row: 1; position: relative; align-self: center; padding: 40px 0; }
-/* часть заголовка поверх фото сама становится светлой: белый текст в режиме «разница» на белом фоне — чёрный */
-.mhero__title { font-size: clamp(52px, 7.2vw, 118px); font-weight: 800; line-height: .94; letter-spacing: -0.05em; width: 165%; color: #fff; mix-blend-mode: difference; }
-.mhero__lead { max-width: 290px; margin-top: 34px; font-size: 15px; line-height: 1.65; color: #222; }
-.mhero__bottom { grid-column: 1 / -1; grid-row: 2; display: grid; grid-template-columns: 38% 1fr; align-items: end; padding: 0 0 40px; }
-.mhero__links { display: flex; gap: 28px; flex-wrap: wrap; }
-.mhero__facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 0; }
-.mhero__facts dt { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-.mhero__facts dd { font-size: 14px; color: var(--muted); margin: 0; }
-/* подчёркнутая ссылка, как «Continue reading» в референсе */
-.ulink { display: inline-block; font-size: 15px; font-weight: 600; padding-bottom: 10px; border-bottom: 1.5px solid currentColor; min-width: 180px; transition: opacity .2s; }
-.ulink:hover { opacity: .6; }
-.ulink--muted { color: var(--muted); min-width: 0; }
+.bbtn svg { width: 20px; }
+.bbtn--dark { background: #111; color: #fff; }
+.bbtn--dark:hover { background: #000; transform: translateX(2px); }
+.bbtn--line { border: 1.5px solid #111; background: #fff; color: #111; }
+.bbtn--line:hover { background: #111; color: #fff; }
+/* ---------- Слайд «Знакомство»: текст слева, фото Шэньчжэня в дуге справа внизу ---------- */
+:root { --blue: #0f3ef0; --blue-dark: #0a2ec4; }
+.wslide { position: relative; overflow: hidden; background: #fff; display: flex; align-items: center; }
+.wslide__photo { position: absolute; right: 0; bottom: 0; width: 51.5%; max-height: 100%; object-fit: contain; object-position: right bottom; }
+.deck .wrap.wslide__inner { position: relative; z-index: 1; width: 100%; max-width: 1360px; padding-left: 24px; padding-right: 24px; }
+.wslide__text { max-width: 52%; padding: 32px 0; }
+.wslide__title { font-size: clamp(36px, 4.1vw, 74px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; }
+.wslide__title span { color: var(--blue); }
+.wslide__bar { display: block; width: 64px; height: 4px; border-radius: 2px; background: var(--blue); margin: clamp(14px, 1.3vw, 24px) 0 clamp(16px, 1.6vw, 28px); }
+.wslide__sub { font-size: clamp(19px, 2vw, 36px); line-height: 1.28; color: #222; }
+.wslide__p { font-size: clamp(16px, 1.65vw, 30px); line-height: 1.3; color: #222; margin-top: clamp(14px, 1.6vw, 28px); }
+.wslide__p b { font-weight: 800; color: var(--text); }
+.wslide__accent { font-size: clamp(16px, 1.65vw, 30px); font-weight: 800; color: var(--blue); margin-top: clamp(14px, 1.6vw, 26px); }
+.pill {
+  display: inline-flex; align-items: center; gap: 18px; margin-top: clamp(22px, 2.6vw, 46px);
+  height: clamp(54px, 4.5vw, 82px); padding: 0 clamp(28px, 3.2vw, 58px); border-radius: 50px;
+  background: var(--blue); color: #fff; font-size: clamp(17px, 1.9vw, 34px); font-weight: 800;
+  box-shadow: 0 12px 30px rgba(15,62,240,.25); transition: background .2s, transform .2s;
+}
+.pill svg { width: 1.3em; }
+.pill:hover { background: var(--blue-dark); transform: translateX(3px); }
+
+/* объединённый слайд «Опт»: светлая лесенка цен, менеджер, кнопки */
+.tiers--light { margin-top: 24px; max-width: 460px; }
+.tiers--light .tier { background: var(--bg-2); color: var(--text); }
+.opt-manager { font-size: 14px; color: var(--muted); margin-top: 18px; }
+.opt-manager a { color: var(--text); font-weight: 700; text-decoration: underline; }
+.opt-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.opt-slide { display: grid; grid-template-columns: minmax(0, 440px) minmax(0, 1fr); gap: 64px; align-items: center; }
+
+/* мини-каталог на слайде «Опт»: все филаменты, розничная и оптовая цена */
+.mini-cat { border: 1px solid var(--line); border-radius: 14px; background: #fff; overflow: hidden; }
+.mini-cat__head { display: flex; align-items: baseline; gap: 12px; padding: 16px 22px; border-bottom: 1px solid var(--line); }
+.mini-cat__head b { font-size: 17px; }
+.mini-cat__head span { font-size: 13px; color: var(--muted); }
+.mini-cat__head .link { margin-left: auto; font-size: 14px; }
+.mini-cat__row { display: grid; grid-template-columns: 48px minmax(0, 1fr) 76px 96px; gap: 16px; align-items: center; padding: 9px 22px; border-bottom: 1px solid var(--line); transition: background .15s; }
+.mini-cat__row:last-child { border-bottom: 0; }
+.mini-cat__row:hover { background: var(--bg-2); }
+.mini-cat__img .spool { width: 48px; transition: transform .5s; }
+.mini-cat__row:hover .spool { transform: rotate(40deg); }
+.mini-cat__name b { display: block; font-size: 16px; }
+.mini-cat__dots { display: flex; gap: 4px; margin-top: 4px; }
+.mini-cat__dots i { width: 11px; height: 11px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
+.mini-cat__price { text-align: right; white-space: nowrap; }
+.mini-cat__price small { display: block; font-size: 11px; color: var(--muted); line-height: 1.3; }
+.mini-cat__price b { display: block; font-size: 16px; color: var(--muted); font-weight: 600; }
+/* оптовая цена — главная на этом слайде */
+.mini-cat__price--opt b { color: var(--text); font-weight: 800; }
+
+body[data-slide="home"] .deck-count { opacity: 0; } /* на первом слайде счётчик не нужен — он лёг бы на фото */
+.deck-count { transition: opacity .3s; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---------- Секции ---------- */
@@ -253,31 +302,6 @@ button { cursor: pointer; background: none; border: 0; }
 .section--dark .nums div { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); }
 .section--dark .nums b { color: var(--gold-light); }
 .section--dark .nums span { color: var(--on-dark-muted); }
-
-/* «О нас» с картой на фоне */
-.about-map-section { position: relative; overflow: hidden; }
-.about-map { position: absolute; top: 0; bottom: 0; right: 0; width: 64%; height: 100%; display: block; }
-.about-map-section::before {
-  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-  background: linear-gradient(90deg, #fff 0%, rgba(255,255,255,.92) 30%, rgba(255,255,255,0) 46%);
-}
-.about-map .land { fill: none; stroke: rgba(0,0,0,.2); stroke-width: 4.8; stroke-linecap: round; }
-.about-map .land--md { stroke-width: 3.6; }
-.about-map .land--sm { stroke-width: 2.4; }
-.about-map .route { fill: none; stroke: var(--text); stroke-width: 1.6; stroke-dasharray: 5 7; opacity: .75; animation: route-dash 1.4s linear infinite; }
-.about-map .city { fill: var(--text); }
-.about-map .city-label { fill: var(--text); font: 700 19px var(--font); }
-.about-map .hub { fill: var(--text); stroke: #fff; stroke-width: 3; }
-.about-map .hub-pulse { fill: none; stroke: var(--text); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: hub-pulse 2.2s ease-out infinite; }
-.about-map .hub-label rect { fill: var(--text); stroke: none; }
-.about-map .hub-label text { fill: #fff; font: 700 21px var(--font); }
-@keyframes route-dash { to { stroke-dashoffset: -24; } }
-@keyframes hub-pulse { 0% { transform: scale(1); opacity: .9; } 100% { transform: scale(4.5); opacity: 0; } }
-@media (prefers-reduced-motion: reduce) { .about-map .route, .about-map .hub-pulse { animation: none; } }
-.about-band--map { position: relative; z-index: 2; grid-template-columns: minmax(0, 560px) 1fr; min-height: 500px; }
-.nums--compact { margin-top: 28px; gap: 10px; }
-.nums--compact div { padding: 16px 18px; }
-.nums--compact b { font-size: 28px; }
 
 /* О компании в цифрах */
 .about-band { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
@@ -564,7 +588,7 @@ body[data-page="home"] .footer { display: none; } /* самое нужное и�
 .slide--center { display: flex; flex-direction: column; justify-content: center; }
 /* блоки внутри слайда не сжимаются — если не влезли, слайд прокручивается */
 .slide--center > * { flex-shrink: 0; }
-.slide.about-map-section { padding: 0; }
+.slide--center > .wrap { width: 100%; } /* иначе контейнер сжимается до содержимого и уезжает в центр */
 .slide .section__head { margin-bottom: 28px; }
 /* место под чёрную панель справа */
 .deck .wrap { padding-left: 84px; padding-right: 112px; max-width: 1400px; }
@@ -605,26 +629,38 @@ body[data-page="home"] .footer { display: none; } /* самое нужное и�
 
 /* ---------- Адаптив ---------- */
 @media (max-width: 1040px) {
-  .slide-delivery, .slide-faq { grid-template-columns: 1fr; gap: 28px; }
+  .slide-delivery, .slide-faq, .opt-slide { grid-template-columns: 1fr; gap: 28px; }
   .deck .wrap { padding-left: 40px; padding-right: 96px; }
-  .mhero { padding: 0 96px 0 40px; grid-template-columns: 42% 1fr; }
-  .mhero__bottom { grid-template-columns: 1fr; gap: 24px; }
-  .mhero__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; }
+  .bhero__text { max-width: 470px; }
+  .bhero__lead { font-size: 17px; }
 }
 /* слайды на телефоне: панель внизу, свайп, содержимое слайда прокручивается */
 @media (max-width: 860px) {
   .deck .wrap { padding-left: 16px; padding-right: 16px; }
   .slide.section { padding: 28px 0 88px; }
-  .slide.about-map-section { padding-bottom: 72px; }
   .slide--center { justify-content: flex-start; }
-  /* первый слайд: фото сверху, заголовок, абзац, ссылки, факты 2×2 */
-  .mhero { display: flex; flex-direction: column; padding: 0 16px 88px; }
-  .mhero > * { flex-shrink: 0; }
-  .mhero__photo { order: -1; margin: 16px 0 34px; height: 210px; }
-  .mhero__text { padding: 0; }
-  .mhero__title { width: auto; font-size: 44px; }
-  .mhero__lead { margin-top: 18px; max-width: none; }
-  .mhero__bottom { padding: 26px 0 0; }
+  /* первый слайд: фото сверху, под ним заголовок, абзац и кнопки на всю ширину */
+  .bhero { flex-direction: column; align-items: stretch; padding-bottom: 76px; }
+  .bhero > * { flex-shrink: 0; }
+  .bhero__photo { position: relative; inset: auto; width: 100%; height: 230px; background-position: right center; }
+  .bhero__text { padding: 6px 0 0; }
+  .bhero__title { font-size: 42px; }
+  .bhero__lead { margin: 16px 0 24px; font-size: 16px; }
+  .bhero__btns { flex-direction: column; gap: 10px; }
+  .bbtn { width: 100%; height: 56px; font-size: 17px; }
+  /* «Знакомство» на телефоне: текст, под ним фото в дуге */
+  .mini-cat__head span { display: none; }
+  .mini-cat__head, .mini-cat__row { padding-left: 14px; padding-right: 14px; }
+  .mini-cat__row { grid-template-columns: 40px minmax(0, 1fr) 62px 74px; gap: 10px; }
+  .mini-cat__img .spool { width: 40px; }
+  .mini-cat__name b, .mini-cat__price b { font-size: 14px; }
+  .mini-cat__price small { font-size: 10px; }
+  .wslide { flex-direction: column; align-items: stretch; padding-bottom: 76px; }
+  .wslide > * { flex-shrink: 0; }
+  .wslide__text { max-width: none; padding: 26px 0 8px; }
+  .wslide__title { font-size: 32px; }
+  .wslide__photo { position: relative; width: 100%; max-height: none; aspect-ratio: 914 / 657; }
+  .pill { width: 100%; justify-content: center; }
   /* панель: стрелки по краям, подпись следующего раздела посередине */
   .deck-side { top: auto; bottom: 0; left: 0; right: 0; width: auto; flex-direction: row; height: 58px; }
   .deck-side__arrows { display: contents; }
@@ -676,11 +712,7 @@ body[data-page="home"] .footer { display: none; } /* самое нужное и�
   .footer__grid { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 860px) {
-  /* карта на телефоне — отдельной картинкой над текстом */
-  .about-map-section { padding-top: 0; }
-  .about-map { position: relative; width: 100%; height: auto; aspect-ratio: 820 / 420; }
-  .about-map-section::before { display: none; }
-  .about-band--map { min-height: 0; padding-top: 8px; }
+
   .section { padding: 64px 0; }
   .section__head { flex-direction: column; align-items: start; }
   .cta .wrap { grid-template-columns: 1fr; }
