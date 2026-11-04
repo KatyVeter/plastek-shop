@@ -17,50 +17,42 @@
 </head>
 <body data-page="home">
 
-  <!-- Первый экран -->
-  <section class="hero">
-    <!-- ВРЕМЕННОЕ ФОТО из концепта (img/hero-spool.png). Заменить реальной съёмкой своей катушки -->
-    <div class="hero__photo" role="img" aria-label="Катушка филамента PLA Matte цвета хаки"></div>
-    <a class="hero__tag" id="hero-tag" href="catalog.html?mat=PLA%20Matte">На фото: <b>PLA Matte, хаки</b></a>
+  <!-- Главная — набор слайдов. Листаются стрелками по бокам (подписаны соседним слайдом),
+       клавишами ← →, колесом мыши и свайпом. У каждого слайда свой адрес: index.html#opt и т. д. -->
+  <main class="deck" id="deck">
+  <div class="deck__track">
 
-    <div class="wrap hero__inner">
-      <div class="hero__text">
-        <p class="hero__eyebrow">Филамент для 3D-печати · розница и опт</p>
-        <h1 class="h1">От одной катушки<br>до целой паллеты</h1>
-        <p class="lead">PLA, PETG, ABS и TPU с заводов Шэньчжэня. Диаметр 1,75 мм — подходит для большинства принтеров:</p>
-        <div class="printers"><span>Bambu Lab</span><span>Creality</span><span>Prusa</span><span>Anycubic</span><span>Elegoo</span></div>
-        <div class="hero__price">
-          <b id="hero-price">от $13.90</b><span>за катушку 1 кг</span>
-          <a class="hero__opt" id="hero-opt" href="opt.html">от 10 шт. — дешевле</a>
-        </div>
-        <div class="hero__btns">
-          <a class="btn btn--gold" href="catalog.html">Перейти в каталог <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 12h15M13 6l6 6-6 6"/></svg></a>
-          <a class="btn btn--light" href="opt.html">Оптовые цены</a>
-        </div>
-      </div>
+  <!-- 1. Главная -->
+  <!-- Раскладка по референсу: крупный заголовок слева заходит на фото, короткий абзац и ссылка,
+       внизу — строка фактов «подпись / значение» -->
+  <section class="slide mhero" id="home" data-title="Главная">
+    <figure class="mhero__photo">
+      <!-- ВРЕМЕННОЕ ФОТО из концепта (img/hero-spool.png). Заменить реальной съёмкой своей катушки -->
+      <div class="mhero__img" role="img" aria-label="Катушка филамента PLA Matte"></div>
+      <figcaption><a id="hero-tag" href="catalog.html?mat=PLA%20Matte">На фото: PLA Matte</a></figcaption>
+    </figure>
+
+    <div class="mhero__text">
+      <h1 class="mhero__title">От одной<br>катушки<br>до паллеты</h1>
+      <p class="mhero__lead">Филамент PLA, PETG, ABS и TPU с заводов Шэньчжэня. Диаметр 1,75 мм — для Bambu Lab, Creality, Prusa и других принтеров.</p>
     </div>
 
-    <div class="wrap hero__bottom">
-      <div class="hero__stats">
-        <div class="hero__stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b>Шэньчжэнь</b><span>склад и отгрузка</span></div></div>
-        <div class="hero__stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/></svg><div><b id="stat-mats">7 материалов</b><span>от PLA до TPU</span></div></div>
-        <div class="hero__stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h13v10H3zM16 10h4l1 3v4h-5"/><circle cx="7" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg><div><b>1–2 дня</b><span>отправка после оплаты</span></div></div>
-        <div class="hero__stat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg><div><b>5 стран СНГ</b><span>Казахстан, Беларусь и др.</span></div></div>
+    <div class="mhero__bottom">
+      <div class="mhero__links">
+        <a class="ulink" href="catalog.html">Перейти в каталог</a>
+        <a class="ulink ulink--muted" href="opt.html">Оптовые цены</a>
       </div>
-      <a class="hero__colors" href="#colors" id="hero-colors"><span>Все цвета</span></a>
+      <dl class="mhero__facts">
+        <div><dt>Цена</dt><dd id="hero-price">от $13.90</dd></div>
+        <div><dt>Опт</dt><dd id="hero-opt">от 10 шт. — дешевле</dd></div>
+        <div><dt>Ассортимент</dt><dd id="stat-mats">7 материалов</dd></div>
+        <div><dt>Доставка</dt><dd>5 стран СНГ</dd></div>
+      </dl>
     </div>
   </section>
 
-  <!-- Лента цветов из каталога -->
-  <section class="colors-band" id="colors">
-    <div class="wrap">
-      <div class="colors-band__title"><b id="colors-count">Цвета</b><span>в каталоге</span></div>
-      <div class="colors-row" id="colors-row" data-catalog></div>
-    </div>
-  </section>
-
-  <!-- Подбор материала -->
-  <section class="section" id="materials">
+  <!-- 2. Подбор материала -->
+  <section class="slide section" id="materials" data-title="Материалы">
     <div class="wrap">
       <div class="section__head">
         <h2 class="h2">Какой пластик выбрать</h2>
@@ -74,19 +66,23 @@
     </div>
   </section>
 
-  <!-- Популярное -->
-  <section class="section" id="popular">
+  <!-- 3. Популярное и все цвета -->
+  <section class="slide section" id="popular" data-title="Популярное">
     <div class="wrap">
       <div class="section__head">
         <h2 class="h2">Популярное</h2>
         <a class="link" href="catalog.html">Весь каталог</a>
       </div>
       <div class="grid" id="popular-list" data-catalog></div>
+      <div class="colors-inline" id="colors">
+        <div class="colors-band__title"><b id="colors-count">Цвета</b><span>в каталоге</span></div>
+        <div class="colors-row" id="colors-row" data-catalog></div>
+      </div>
     </div>
   </section>
 
-  <!-- Опт -->
-  <section class="section" style="padding-top:0">
+  <!-- 4. Опт -->
+  <section class="slide section slide--center" id="opt" data-title="Опт">
     <div class="wrap">
       <div class="opt-teaser">
         <div>
@@ -103,9 +99,8 @@
     </div>
   </section>
 
-  <!-- О компании в цифрах -->
-  <!-- О нас: на фоне точечная карта с Шэньчжэнем и маршрутами в страны доставки (рисуется скриптом ниже) -->
-  <section class="section section--dark about-map-section">
+  <!-- 5. О нас: на фоне точечная карта с Шэньчжэнем и маршрутами в страны доставки (рисуется скриптом ниже) -->
+  <section class="slide section about-map-section slide--center" id="about" data-title="О нас">
     <svg class="about-map" id="about-map" viewBox="0 0 1090 610" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"></svg>
     <div class="wrap about-band about-band--map">
       <div class="about-band__text">
@@ -123,73 +118,40 @@
     </div>
   </section>
 
-  <!-- Отзывы. ВНИМАНИЕ: образцы для вёрстки — перед запуском заменить реальными отзывами или убрать блок -->
-  <section class="section">
-    <div class="wrap">
-      <div class="section__head">
-        <h2 class="h2">Отзывы</h2>
-        <a class="link" href="#" id="reviews-link">Все отзывы в Telegram</a>
+  <!-- 6. Доставка и оплата: как заказать, куда возим, как платить -->
+  <section class="slide section slide--center" id="delivery" data-title="Доставка">
+    <div class="wrap slide-delivery">
+      <div>
+        <p class="label">Доставка и оплата</p>
+        <h2 class="h2" style="margin:10px 0 28px">Как заказать</h2>
+        <div class="steps steps--grid">
+          <div class="step"><h3>Соберите корзину</h3><p>Любые материалы и цвета. От 10 катушек — оптовая цена.</p></div>
+          <div class="step"><h3>Оформите заказ</h3><p>Укажите страну, город и способ доставки.</p></div>
+          <div class="step"><h3>Оплатите</h3><p>Картой по ссылке или банковским переводом по счёту.</p></div>
+          <div class="step"><h3>Получите</h3><p>Отправим за 1–2 рабочих дня, трек-номер придёт на почту.</p></div>
+        </div>
       </div>
-      <div class="reviews">
-        <div class="review">
-          <span class="sample">Образец отзыва</span>
-          <div class="stars">★★★★★</div>
-          <p>Здесь будет отзыв покупателя: что печатал, каким пластиком, как дошла посылка.</p>
-          <div class="review__who"><i>И</i><div>Имя покупателя<span>Город · PLA Matte</span></div></div>
+      <div class="info-stack">
+        <div class="info-card">
+          <h3>Куда доставляем</h3>
+          <div class="chip-list" id="countries" style="margin:12px 0"></div>
+          <p>Пункт выдачи СДЭК или курьер. Стоимость — по тарифу службы, сообщим до оплаты.</p>
         </div>
-        <div class="review">
-          <span class="sample">Образец отзыва</span>
-          <div class="stars">★★★★★</div>
-          <p>Здесь будет отзыв мастерской или студии, которая берёт оптом: объём, регулярность, впечатление от работы.</p>
-          <div class="review__who"><i>С</i><div>Название студии<span>Город · опт, PETG</span></div></div>
+        <div class="info-card">
+          <h3>Оплата</h3>
+          <div class="paybar paybar--light"><b>Visa</b><b>Mastercard</b><b>Apple Pay</b><b>Google Pay</b><b>Перевод</b></div>
+          <p>Цены в долларах. Для Беларуси — только банковский перевод.</p>
         </div>
-        <div class="review">
-          <span class="sample">Образец отзыва</span>
-          <div class="stars">★★★★★</div>
-          <p>Здесь будет отзыв о доставке в другую страну: сколько шла посылка и в каком виде пришла.</p>
-          <div class="review__who"><i>А</i><div>Имя покупателя<span>Город · Silk PLA</span></div></div>
-        </div>
+        <a class="link" href="delivery.html" style="align-self:flex-start">Подробно: доставка, оплата и возврат</a>
       </div>
     </div>
   </section>
 
-  <!-- Как заказать -->
-  <section class="section" style="padding-top:0">
-    <div class="wrap">
-      <h2 class="h2" style="margin-bottom:32px">Как заказать</h2>
-      <div class="steps">
-        <div class="step"><h3>Соберите корзину</h3><p>Любые материалы и цвета. От 10 катушек — оптовая цена.</p></div>
-        <div class="step"><h3>Оформите заказ</h3><p>Укажите страну, город и способ доставки.</p></div>
-        <div class="step"><h3>Оплатите</h3><p>Посчитаем доставку и пришлём ссылку на оплату картой или счёт для компании.</p></div>
-        <div class="step"><h3>Получите</h3><p>Отправим за 1–2 рабочих дня, трек-номер придёт на почту.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Галерея образцов: скрыта, пока нет фото. Чтобы включить — уберите атрибут hidden -->
-  <section class="section section--alt" hidden>
-    <div class="wrap">
-      <div class="section__head">
-        <h2 class="h2">Что печатают из нашего пластика</h2>
-        <p class="muted">Модели наших покупателей и тестовые печати.</p>
-      </div>
-      <div class="gallery">
-        <figure><div class="ph">Фото модели</div><figcaption>Фигурка <span>· PLA Matte, хаки</span></figcaption></figure>
-        <figure><div class="ph">Фото модели</div><figcaption>Ваза <span>· Silk PLA, золото</span></figcaption></figure>
-        <figure><div class="ph">Фото модели</div><figcaption>Корпус прибора <span>· PETG, чёрный</span></figcaption></figure>
-        <figure><div class="ph">Фото модели</div><figcaption>Чехол <span>· TPU 95A, прозрачный</span></figcaption></figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section section--alt" id="faq">
-    <div class="wrap faq-wrap">
-      <aside>
-        <h2 class="h2">Вопросы</h2>
-        <p>Не нашли ответ — напишите нам, ответим в течение рабочего дня.</p>
-        <a class="btn btn--ghost btn--sm" id="faq-tg" href="#" target="_blank" rel="noopener">Написать в Telegram</a>
-      </aside>
+  <!-- 7. Вопросы и связь -->
+  <section class="slide section" id="faq" data-title="Вопросы">
+    <div class="wrap slide-faq">
+      <div>
+        <h2 class="h2" style="margin-bottom:18px">Вопросы</h2>
       <div class="faq">
         <details open>
           <summary>С какого пластика начать?</summary>
@@ -216,31 +178,42 @@
           <p>В пакете или контейнере с силикагелем. PETG и особенно TPU быстро набирают влагу — перед печатью их стоит просушить.</p>
         </details>
       </div>
+      </div>
+      <div class="info-stack">
+        <div class="community__card community__card--tg">
+          <h3 class="h3" style="font-size:21px">Не нашли ответ?</h3>
+          <p>Напишите в Telegram — ответим в течение рабочего дня. Там же поступления и советы по печати.</p>
+          <a class="btn" id="tg-btn" href="#" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="community__card">
+          <h3 class="h3" style="font-size:21px">Новые цвета — на почту</h3>
+          <form class="subscribe" id="subscribe" style="margin-top:14px">
+            <input type="email" required placeholder="Ваш e-mail" aria-label="E-mail">
+            <button class="btn">Подписаться</button>
+          </form>
+          <p class="consent" style="margin:10px 0 0">Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">политикой конфиденциальности</a>.</p>
+        </div>
+        <!-- на главной общий подвал скрыт — здесь его самое нужное -->
+        <p class="slide-foot" id="slide-foot"></p>
+      </div>
     </div>
   </section>
 
-  <!-- Подписка и Telegram -->
-  <section class="section">
-    <div class="wrap community">
-      <div class="community__card">
-        <h2 class="h3" style="font-size:24px">Новые поступления на почту</h2>
-        <p>Напишем, когда появятся новые цвета и материалы.</p>
-        <form class="subscribe" id="subscribe">
-          <input type="email" required placeholder="Ваш e-mail" aria-label="E-mail">
-          <button class="btn">Подписаться</button>
-        </form>
-        <p class="consent" style="margin:10px 0 0">Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">политикой конфиденциальности</a>.</p>
-      </div>
-      <div class="community__card community__card--tg">
-        <h2 class="h3" style="font-size:24px">Канал в Telegram</h2>
-        <p>Поступления, наличие цветов и советы по печати. Там же можно задать вопрос.</p>
-        <a class="btn" id="tg-btn" href="#" target="_blank" rel="noopener"></a>
-      </div>
+  </div>
+  <!-- Навигация как в референсе: чёрная панель у правого края — стрелки и подпись следующего раздела -->
+  <nav class="deck-side" aria-label="Разделы главной">
+    <div class="deck-side__arrows">
+      <button class="deck-side__btn deck-next" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h17M14 6l6 6-6 6"/></svg></button>
+      <button class="deck-side__btn deck-prev" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12H4M10 6l-6 6 6 6"/></svg></button>
     </div>
-  </section>
+    <button class="deck-side__label deck-next-label" type="button"><span></span></button>
+  </nav>
+  <div class="deck-count" aria-hidden="true"><b></b><i><span></span></i><b></b></div>
+  </main>
 
   <script src="js/vendor/xlsx.full.min.js"></script>
   <script src="js/app.js"></script>
+  <script src="js/deck.js"></script>
   <script>
     const { $, money, esc, spool, card, icon } = App;
 
@@ -296,8 +269,11 @@
       frame(); mq.addEventListener("change", frame);
     })();
 
-    $("#tg-btn").href =$("#faq-tg").href = $("#reviews-link").href = SITE.telegram;
-    $("#tg-btn").innerHTML = `${icon.tg} Открыть ${esc(SITE.telegramName)}`;
+    $("#tg-btn").href = SITE.telegram;
+    $("#tg-btn").innerHTML = `${icon.tg} Написать ${esc(SITE.telegramName)}`;
+    $("#countries").innerHTML = SITE.countries.map(c => `<span class="chip">${esc(c)}</span>`).join("");
+    $("#slide-foot").innerHTML = `${esc(SITE.email)} · ${esc(SITE.hours)}<br>
+      <a href="offer.html">Оферта</a> · <a href="privacy.html">Конфиденциальность</a> · <a href="about.html#contacts">Контакты и реквизиты</a>`;
     $("#opt-manager").innerHTML = `Менеджер по опту — ${esc(SITE.optManager)}, <a href="${SITE.optTelegram}" target="_blank" rel="noopener" style="text-decoration:underline">${esc(SITE.optTelegramName)}</a>`;
 
     $("#subscribe").addEventListener("submit", e => {
@@ -319,20 +295,20 @@
     App.ready.then(({ materials, products }) => {
       // первый экран: минимальная цена, оптовая цена от 10 шт., товар на фото, число материалов, цвета
       const cheapest = products.reduce((a, b) => a.price <= b.price ? a : b);
-      $("#hero-price").textContent = "от " + money(cheapest.price);
+      $("#hero-price").textContent = `от ${money(cheapest.price)} за катушку`;
       const opt1 = Math.min(...cheapest.variants.map(v => v.opt1 || v.price));
       $("#hero-opt").textContent = `от ${SITE.tiers[0]} шт. — ${money(opt1)}`;
       $("#stat-mats").textContent = `${materials.length} ${App.plural(materials.length, "материал", "материала", "материалов")}`;
       const pp = products.find(p => p.mat === "PLA Matte");
       const pv = pp && pp.variants.find(v => /хаки/i.test(v.color));
-      if (pv) { $("#hero-tag").href = `product.html?id=${pp.id}&sku=${encodeURIComponent(pv.sku)}`; $("#hero-tag").innerHTML = `На фото: <b>${esc(pp.name)}, ${esc(pv.color.toLowerCase())}</b> · ${money(pv.price)}`; }
+      if (pv) { $("#hero-tag").href = `product.html?id=${pp.id}&sku=${encodeURIComponent(pv.sku)}`; $("#hero-tag").textContent = `На фото: ${pp.name}, ${pv.color.toLowerCase()} — ${money(pv.price)}`; }
       $("#sku-count").textContent = products.reduce((s, p) => s + p.variants.length, 0);
 
       // лента цветов: уникальные цвета из Excel, клик — каталог с этим цветом
       const colors = new Map();
       products.forEach(p => p.variants.forEach(v => { if (!colors.has(v.hex.toLowerCase())) colors.set(v.hex.toLowerCase(), v.color); }));
       $("#colors-count").textContent = `${colors.size} ${App.plural(colors.size, "цвет", "цвета", "цветов")}`;
-      $("#hero-colors").innerHTML = [...colors.keys()].filter(h => !/^#(1d|23|f2|ec|e3|d7|8d)/i.test(h)).slice(0, 7).map(h => `<i style="background:${esc(h)}"></i>`).join("") + `<span>${colors.size} ${App.plural(colors.size, "цвет", "цвета", "цветов")} в каталоге</span>`;
+      $("#stat-mats").textContent += `, ${colors.size} ${App.plural(colors.size, "цвет", "цвета", "цветов")}`;
       $("#colors-row").innerHTML =[...colors].map(([hex, name]) => `<a href="catalog.html?color=${encodeURIComponent(name)}" style="background:${esc(hex)}" title="${esc(name)}" aria-label="${esc(name)}"></a>`).join("");
 
       const prodOf = id => products.find(p => p.mat === id);

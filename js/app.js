@@ -65,25 +65,25 @@ window.SITE = {
 
   /* ---------- Катушка филамента (SVG) ---------- */
   let uid = 0;
-  // Светлая кремовая катушка: цвет пластика занимает большую часть круга
+  // Светлая катушка: цвет пластика занимает большую часть круга
   function spool(color = "#c9a24a") {
     const id = "g" + (++uid);
     let rings = "";
     for (let r = 38; r <= 88; r += 3) rings += `<circle cx="100" cy="100" r="${r}" fill="none" stroke="rgba(0,0,0,.12)" stroke-width="1"/>`;
     let spokes = "";
-    for (let i = 0; i < 3; i++) spokes += `<rect x="96" y="6" width="8" height="62" rx="4" fill="#ece6d3" stroke="#d3cbb2" stroke-width="1" transform="rotate(${i * 120 + 30} 100 100)"/>`;
+    for (let i = 0; i < 3; i++) spokes += `<rect x="96" y="6" width="8" height="62" rx="4" fill="#f3f3f3" stroke="#d4d4d4" stroke-width="1" transform="rotate(${i * 120 + 30} 100 100)"/>`;
     return `<svg class="spool" viewBox="0 0 200 200" aria-hidden="true">
       <defs><radialGradient id="${id}" cx="32%" cy="28%" r="82%">
         <stop offset="0" stop-color="#fff" stop-opacity=".4"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/>
       </radialGradient></defs>
-      <circle cx="100" cy="100" r="97" fill="#ece6d3" stroke="#d3cbb2" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="97" fill="#f3f3f3" stroke="#d4d4d4" stroke-width="1.5"/>
       <circle cx="100" cy="100" r="90" fill="${color}"/>
       ${rings}
       <circle cx="100" cy="100" r="90" fill="url(#${id})"/>
       ${spokes}
-      <circle cx="100" cy="100" r="34" fill="#ece6d3" stroke="#d3cbb2" stroke-width="1.5"/>
-      <circle cx="100" cy="100" r="14" fill="#2f3a22"/>
-      <text x="100" y="80" text-anchor="middle" font-family="Manrope,Arial" font-size="7" font-weight="800" letter-spacing="1.5" fill="#8a8468">${S.brand}</text>
+      <circle cx="100" cy="100" r="34" fill="#f3f3f3" stroke="#d4d4d4" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="14" fill="#111111"/>
+      <text x="100" y="80" text-anchor="middle" font-family="Manrope,Arial" font-size="7" font-weight="800" letter-spacing="1.5" fill="#9a9a9a">${S.brand}</text>
     </svg>`;
   }
 
@@ -212,7 +212,7 @@ window.SITE = {
     const top = `
     <header class="header"><div class="wrap">
       <button class="burger" aria-label="Меню" aria-expanded="false">${icon.burger}</button>
-      <a class="logo" href="index.html">${S.brand}</a>
+      <a class="logo" href="index.html" aria-label="${S.brand} — на главную"><span class="logo__mark">${S.brand[0]}</span>${S.brand}</a>
       <nav class="nav nav--left" aria-label="Основное меню">
         <a href="catalog.html" class="nav__drop ${act("catalog")}" data-mega="catalog" aria-haspopup="true" aria-expanded="false">Каталог ${icon.chevron}</a>
         <a href="index.html#materials">Подбор пластика</a>
@@ -446,7 +446,7 @@ window.SITE = {
     const dots = p.variants.slice(0, 8).map(x => `<span style="background:${esc(x.hex)}" title="${esc(x.color)}"></span>`).join("");
     const more = p.variants.length > 8 ? `<small class="muted">+${p.variants.length - 8}</small>` : "";
     return `<a class="card" href="product.html?id=${p.id}&sku=${encodeURIComponent(v.sku)}">
-      <div class="card__media" style="background:radial-gradient(circle at 50% 45%, #fdfcf9 30%, ${esc(v.hex)}33 100%)">${p.badge ? `<span class="card__badge">${esc(p.badge)}</span>` : ""}${spool(v.hex)}</div>
+      <div class="card__media">${p.badge ? `<span class="card__badge">${esc(p.badge)}</span>` : ""}${spool(v.hex)}</div>
       <div class="card__body">
         <span class="card__mat">${esc(p.mat)}</span>
         <span class="card__title">${esc(p.name)}</span>
