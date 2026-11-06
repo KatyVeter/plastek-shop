@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=filament-transitions-4">
+  <link rel="stylesheet" href="css/style.css?v=rolling-filament-5">
 </head>
 <body data-page="home">
 
@@ -159,14 +159,17 @@
   <div class="deck-interlude" aria-hidden="true"><span class="deck-interlude__han" lang="zh-Hans"></span><span class="deck-interlude__meaning"></span></div>
   <nav class="deck-scrubber" aria-label="Разделы главной">
     <div class="deck-scrubber__heading"><span class="deck-current-title">Главная</span><span class="deck-position" aria-hidden="true"></span></div>
-    <input class="deck-range" type="range" min="0" max="4" step="0.001" value="0" aria-label="Перейти к разделу">
+    <div class="deck-range-shell">
+      <input class="deck-range" type="range" min="0" max="4" step="0.001" value="0" aria-label="Перейти к разделу">
+      <span class="deck-spool" aria-hidden="true"></span>
+    </div>
     <div class="deck-stops"></div>
   </nav>
   </main>
 
   <script src="js/vendor/xlsx.full.min.js"></script>
   <script src="js/app.js"></script>
-  <script src="js/deck.js?v=filament-transitions-4"></script>
+  <script src="js/deck.js?v=rolling-filament-5"></script>
   <script>
     const { $, money, esc, icon, spool, showcase } = App;
 

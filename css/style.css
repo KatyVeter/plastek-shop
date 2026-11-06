@@ -764,3 +764,14 @@ body[data-page="home"] .cookie { bottom: calc(124px + env(safe-area-inset-bottom
 .deck-interlude__han { font-family: "Noto Serif CJK SC", "Songti SC", SimSun, serif; font-size: clamp(80px, 15vw, 220px); line-height: 1.2; letter-spacing: .08em; color: var(--blue); }
 .deck-interlude__meaning { font-size: clamp(14px, 1.2vw, 18px); color: #595959; }
 @media (prefers-reduced-motion: reduce) { .deck-interlude { display: none; } }
+
+/* Катушка катится на расстояние, соответствующее её окружности. */
+.deck-range-shell { position: relative; }
+.deck-spool { position: absolute; left: 0; top: calc(50% - 17px); width: 34px; height: 34px; background: var(--filament-thumb) center / contain no-repeat; pointer-events: none; filter: drop-shadow(0 2px 2px #0002); transform: translateX(var(--spool-x, 0px)) rotate(var(--spool-angle, 0rad)); }
+.deck.is-ready .deck-spool { transition: transform .6s cubic-bezier(.22, 1, .36, 1); }
+.deck.is-scrubbing .deck-spool { transition: none; }
+.deck-range::-webkit-slider-thumb { opacity: 0; }
+.deck-range::-moz-range-thumb { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .deck.is-ready .deck-spool { transition: none; transform: translateX(var(--spool-x, 0px)); }
+}

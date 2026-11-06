@@ -5,6 +5,13 @@
   const track = deck.querySelector(".deck__track");
   const slides = [...track.children];
   const range = deck.querySelector(".deck-range");
+  const spool = deck.querySelector(".deck-spool");
+  function roll(value) {
+    const distance = Math.max(0, range.clientWidth - 34) * value / (slides.length - 1);
+    spool.style.setProperty("--spool-x", `${distance}px`);
+    spool.style.setProperty("--spool-angle", `${distance / 17}rad`);
+  }
+  new ResizeObserver(() => roll(Number(range.value))).observe(range);
   const title = deck.querySelector(".deck-current-title");
   const position = deck.querySelector(".deck-position");
   const stops = deck.querySelector(".deck-stops");
@@ -41,6 +48,7 @@
     return button;
   });
   function preview(value) {
+    roll(value);
     track.style.transform = `translateX(${-100 * value}%)`;
     range.style.setProperty("--progress", `${value / (slides.length - 1) * 100}%`);
     const i = Math.round(value);
