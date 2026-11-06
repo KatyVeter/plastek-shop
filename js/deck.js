@@ -8,6 +8,29 @@
   const title = deck.querySelector(".deck-current-title");
   const position = deck.querySelector(".deck-position");
   const stops = deck.querySelector(".deck-stops");
+  const interlude = deck.querySelector(".deck-interlude");
+  const words = [["欢迎", "Добро пожаловать"], ["合作", "Сотрудничество"], ["旅程", "Путь"], ["交流", "Общение"]];
+  let frame = 0;
+  function veil(value, wordIndex = Math.floor(value), strength) {
+    const word = words[Math.max(0, Math.min(words.length - 1, wordIndex))];
+    interlude.querySelector(".deck-interlude__han").textContent = word[0];
+    interlude.querySelector(".deck-interlude__meaning").textContent = word[1];
+    const amount = strength === undefined ? Math.sin((value - Math.floor(value)) * Math.PI) : strength;
+    interlude.style.opacity = reduced ? 0 : Math.min(1, Math.max(0, amount * 1.6));
+  }
+  function followTransition(from, to) {
+    cancelAnimationFrame(frame);
+    if (reduced || Math.abs(from - to) < .001) { veil(to, 0, 0); return; }
+    const started = performance.now();
+    const tick = now => {
+      const x = -new DOMMatrixReadOnly(getComputedStyle(track).transform).m41 / track.clientWidth;
+      const progress = Math.max(0, Math.min(1, (x - from) / (to - from)));
+      veil(x, Math.min(Math.round(to), Math.round(from)), Math.sin(progress * Math.PI));
+      if (now - started < 700 && progress < .9999) frame = requestAnimationFrame(tick);
+      else veil(to, 0, 0);
+    };
+    frame = requestAnimationFrame(tick);
+  }
   range.max = slides.length - 1;
   const buttons = slides.map((slide, i) => {
     const button = document.createElement("button");
@@ -40,12 +63,14 @@
 
   function go(i, { updateHash = true } = {}) {
     i = Math.max(0, Math.min(slides.length - 1, i));
+    const from = current < 0 ? i : -new DOMMatrixReadOnly(getComputedStyle(track).transform).m41 / track.clientWidth;
     deck.classList.remove("is-scrubbing");
     const changed = i !== current;
     current = i;
     lockUntil = Date.now() + (reduced ? 150 : 700);
     range.value = i;
     preview(i);
+    followTransition(from, i);
     slides.forEach((s, k) => {
       const on = k === i;
       s.classList.toggle("is-current", on);
@@ -60,8 +85,10 @@
   }
 
   range.addEventListener("input", () => {
+    cancelAnimationFrame(frame);
     deck.classList.add("is-scrubbing");
     preview(Number(range.value));
+    veil(Number(range.value));
   });
   const settle = () => go(Math.round(Number(range.value)));
   range.addEventListener("change", settle);

@@ -601,8 +601,8 @@ body[data-page="home"] .footer { display: none; } /* самое нужное и�
 .deck-range::-webkit-slider-runnable-track { height: 3px; background: linear-gradient(to right, var(--blue) var(--progress), var(--line) var(--progress)); border-radius: 2px; }
 .deck-range::-moz-range-track { height: 3px; background: var(--line); border-radius: 2px; }
 .deck-range::-moz-range-progress { height: 3px; background: var(--blue); }
-.deck-range::-webkit-slider-thumb { appearance: none; width: 26px; height: 18px; margin-top: -7.5px; border: 3px solid #fff; border-radius: 9px; background: var(--blue); box-shadow: 0 1px 4px #0003; }
-.deck-range::-moz-range-thumb { width: 20px; height: 12px; border: 3px solid #fff; border-radius: 9px; background: var(--blue); box-shadow: 0 1px 4px #0003; }
+.deck-range::-webkit-slider-thumb { appearance: none; width: 34px; height: 34px; margin-top: -15.5px; border: 0; border-radius: 50%; background: var(--filament-thumb) center / contain no-repeat; box-shadow: 0 2px 4px #0002; }
+.deck-range::-moz-range-thumb { width: 34px; height: 34px; border: 0; border-radius: 50%; background: var(--filament-thumb) center / contain no-repeat; box-shadow: 0 2px 4px #0002; }
 .deck-range:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 4px; }
 .deck-stops { display: flex; justify-content: space-between; gap: 8px; }
 .deck-stops button { min-height: 24px; font-size: 12px; color: #595959; transition: color .15s; }
@@ -754,3 +754,13 @@ body[data-page="home"] .footer { display: none; } /* самое нужное и�
 
 /* Уведомление не перекрывает управление разделами. */
 body[data-page="home"] .cookie { bottom: calc(112px + env(safe-area-inset-bottom)); }
+
+/* Катушка остаётся настоящим range-контролом: мышь, касание и клавиатура. */
+:root { --filament-thumb: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2040%2040%22%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2218%22%20fill%3D%22white%22%20stroke%3D%22%23111%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2214%22%20fill%3D%22%230f3ef0%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%228%22%20fill%3D%22none%22%20stroke%3D%22%2391adff%22%20stroke-width%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2210%22%20fill%3D%22none%22%20stroke%3D%22%2391adff%22%20stroke-width%3D%22.7%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22%2391adff%22%20stroke-width%3D%22.7%22%2F%3E%3Cpath%20d%3D%22M18%203h4v10h-4zM18%2027h4v10h-4zM3%2018h10v4H3zM27%2018h10v4H27z%22%20fill%3D%22%23111%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%227%22%20fill%3D%22white%22%20stroke%3D%22%23111%22%20stroke-width%3D%222%22%2F%3E%3Ccircle%20cx%3D%2220%22%20cy%3D%2220%22%20r%3D%223%22%20fill%3D%22%23111%22%2F%3E%3C%2Fsvg%3E"); }
+.deck-range { height: 44px; }
+.deck { padding-bottom: calc(112px + env(safe-area-inset-bottom)); }
+body[data-page="home"] .cookie { bottom: calc(124px + env(safe-area-inset-bottom)); }
+.deck-interlude { position: absolute; inset: 0 0 calc(112px + env(safe-area-inset-bottom)); z-index: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; background: #faf9f6; opacity: 0; pointer-events: none; }
+.deck-interlude__han { font-family: "Noto Serif CJK SC", "Songti SC", SimSun, serif; font-size: clamp(80px, 15vw, 220px); line-height: 1.2; letter-spacing: .08em; color: var(--blue); }
+.deck-interlude__meaning { font-size: clamp(14px, 1.2vw, 18px); color: #595959; }
+@media (prefers-reduced-motion: reduce) { .deck-interlude { display: none; } }
