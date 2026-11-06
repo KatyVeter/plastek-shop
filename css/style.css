@@ -831,7 +831,6 @@ body[data-page="home"] .cookie { bottom: calc(124px + env(safe-area-inset-bottom
 @media (max-width: 860px) { .mini-cat__img .material-photo { width: 48px; } }
 
 /* Перелистывание всех цветов в карточке и на странице товара. */
-.material-filter { position: absolute; pointer-events: none; }
 .material-gallery { display: flex; flex-direction: column; align-items: center; width: 100%; min-width: 0; }
 .material-gallery .material-photo { margin: 0 auto; }
 .material-gallery__controls { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px; padding: 8px 12px; }

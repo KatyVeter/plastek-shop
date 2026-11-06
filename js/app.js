@@ -432,22 +432,18 @@ window.SITE = {
   }
 
   /* ---------- Общие иллюстрации материалов во всех каталогах ---------- */
-  const materialCrops = {
-    "PLA Basic": [20, 44, 355, 405], "PLA+": [400, 44, 355, 405],
-    "PLA Matte": [782, 44, 355, 405], "Silk PLA": [1165, 44, 355, 405],
-    "PETG": [105, 550, 410, 400], "ABS": [560, 550, 410, 400],
-    "TPU 95A": [1017, 550, 410, 400]
+  const materialAtlases = {
+    "PLA Basic": "pla-basic", "PLA+": "pla-plus", "PLA Matte": "pla-matte",
+    "Silk PLA": "silk-pla", "PETG": "petg", "ABS": "abs", "TPU 95A": "tpu"
   };
   const galleryProducts = new Map();
   function materialImage(product, variant = product.variants[0]) {
-    const crop = materialCrops[product.name];
-    if (!crop) return spool(variant.hex);
-    const rgb = /^#[a-f0-9]{6}$/i.test(variant.hex) ? variant.hex.slice(1).match(/../g).map(x => parseInt(x, 16) / 255) : [.5, .5, .5];
-    const filterId = `material-tint-${++uid}`;
-    const channels = ["R", "G", "B"].map((c, i) => `<feFunc${c} type="table" tableValues="0 ${rgb[i] * .25} ${rgb[i] * .6} ${rgb[i]} 1"/>`).join("");
-    const filter = `<svg class="material-filter" aria-hidden="true" width="0" height="0"><defs><filter id="${filterId}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>${channels}</feComponentTransfer></filter></defs></svg>`;
-    const style = `aspect-ratio:${crop[2]}/${crop[3]};background-size:${1536 / crop[2] * 100}% ${1024 / crop[3] * 100}%;background-position:${crop[0] / (1536 - crop[2]) * 100}% ${crop[1] / (1024 - crop[3]) * 100}%;filter:url(#${filterId})`;
-    return `${filter}<span class="material-photo" role="img" aria-label="${esc(product.name)}, ${esc(variant.color)} — цветовая иллюстрация" style="${style}"></span>`;
+    const atlas = materialAtlases[product.name];
+    if (!atlas) return spool(variant.hex);
+    const index = Math.max(0, product.variants.findIndex(v => v.sku === variant.sku));
+    const column = index % 4, row = Math.floor(index / 4);
+    const style = `aspect-ratio:3/4;background-image:url('img/filaments/${atlas}-colors.webp');background-size:400% 200%;background-position:${column / 3 * 100}% ${row * 100}%`;
+    return `<span class="material-photo" role="img" aria-label="${esc(product.name)}, ${esc(variant.color)} — цветовая иллюстрация" style="${style}"></span>`;
   }
   function materialGallery(product, variant = showcase(product)) {
     galleryProducts.set(product.id, product);
