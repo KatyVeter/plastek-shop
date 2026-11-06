@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=compact-welcome-6">
+  <link rel="stylesheet" href="css/style.css?v=pla-basic-photo-7">
 </head>
 <body data-page="home">
 
@@ -171,7 +171,7 @@
   <script src="js/app.js"></script>
   <script src="js/deck.js?v=rolling-filament-5"></script>
   <script>
-    const { $, money, esc, icon, spool, showcase } = App;
+    const { $, $$, money, esc, icon, spool, showcase } = App;
 
     $("#tg-btn").href = SITE.telegram;
     $("#tg-btn").innerHTML = `${icon.tg} Написать ${esc(SITE.telegramName)}`;
@@ -202,13 +202,22 @@
         const dots = p.variants.filter(x => !seen.has(x.hex) && seen.add(x.hex)).slice(0, 7)
           .map(x => `<i style="background:${esc(x.hex)}" title="${esc(x.color)}"></i>`).join("");
         const opt = Math.min(...p.variants.map(x => x.opt1 || x.price));
+        const photo = p.name === "PLA Basic"
+          ? "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kL2RlYzY4NWYzLTA3YjgtNDY0NC05NDEwLTkyZDhlOGY2MGFkOQ=e365-w900-h675-c-rw"
+          : "";
         return `<a class="mini-cat__row" href="product.html?id=${p.id}&sku=${encodeURIComponent(sv.sku)}">
-          <span class="mini-cat__img">${spool(sv.hex)}</span>
+          <span class="mini-cat__img">${photo ? `<img src="${esc(photo)}" alt="Катушка белого PLA Basic" width="48" height="48" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ""}${spool(sv.hex)}</span>
           <span class="mini-cat__name"><b>${esc(p.name)}</b><span class="mini-cat__dots">${dots}</span></span>
           <span class="mini-cat__price"><small>Розница</small><b>${money(p.price)}</b></span>
           <span class="mini-cat__price mini-cat__price--opt"><small>Опт от ${SITE.tiers[0]} шт.</small><b>${money(opt)}</b></span>
         </a>`;
       }).join("");
+      // Если внешний источник недоступен, показываем исходную иконку катушки.
+      $$("#mini-cat img").forEach(img => {
+        const fallback = () => img.remove();
+        img.addEventListener("error", fallback, { once: true });
+        if (img.complete && !img.naturalWidth) fallback();
+      });
     });
   </script>
 </body>
