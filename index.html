@@ -156,15 +156,11 @@
   </section>
 
   </div>
-  <!-- Навигация как в референсе: чёрная панель у правого края — стрелки и подпись следующего раздела -->
-  <nav class="deck-side" aria-label="Разделы главной">
-    <div class="deck-side__arrows">
-      <button class="deck-side__btn deck-next" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12h17M14 6l6 6-6 6"/></svg></button>
-      <button class="deck-side__btn deck-prev" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 12H4M10 6l-6 6 6 6"/></svg></button>
-    </div>
-    <button class="deck-side__label deck-next-label" type="button"><span></span></button>
+  <nav class="deck-scrubber" aria-label="Разделы главной">
+    <div class="deck-scrubber__heading"><span class="deck-current-title">Главная</span><span class="deck-position" aria-hidden="true"></span></div>
+    <input class="deck-range" type="range" min="0" max="4" step="0.001" value="0" aria-label="Перейти к разделу">
+    <div class="deck-stops"></div>
   </nav>
-  <div class="deck-count" aria-hidden="true"><b></b><i><span></span></i><b></b></div>
   </main>
 
   <script src="js/vendor/xlsx.full.min.js"></script>

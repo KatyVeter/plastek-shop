@@ -1,22 +1,30 @@
-/* ==========================================================
-   Главная как слайды. Переходы:
-   — чёрная панель у правого края: стрелки → ← и подпись следующего раздела
-     (на телефоне — панель снизу);
-   — клавиши ← → PageUp PageDown Home End; колесо мыши; свайп.
-   Счётчик «01 —— 07» показывает текущий слайд.
-   Адрес текущего слайда — в хэше: index.html#opt
-   ========================================================== */
+// Плавная навигация по разделам: нижний бегунок, клавиатура и свайпы.
 (function () {
   const deck = document.getElementById("deck");
   if (!deck) return;
   const track = deck.querySelector(".deck__track");
   const slides = [...track.children];
-  const prev = deck.querySelector(".deck-prev");
-  const next = deck.querySelector(".deck-next");
-  const nextLabel = deck.querySelector(".deck-next-label");
-  const count = deck.querySelector(".deck-count");
-  const [countFrom, countTo] = count.querySelectorAll("b");
-  const countBar = count.querySelector("span");
+  const range = deck.querySelector(".deck-range");
+  const title = deck.querySelector(".deck-current-title");
+  const position = deck.querySelector(".deck-position");
+  const stops = deck.querySelector(".deck-stops");
+  range.max = slides.length - 1;
+  const buttons = slides.map((slide, i) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = slide.dataset.title;
+    button.addEventListener("click", () => go(i));
+    stops.append(button);
+    return button;
+  });
+  function preview(value) {
+    track.style.transform = `translateX(${-100 * value}%)`;
+    range.style.setProperty("--progress", `${value / (slides.length - 1) * 100}%`);
+    const i = Math.round(value);
+    title.textContent = slides[i].dataset.title;
+    position.textContent = `${pad(i + 1)} / ${pad(slides.length)}`;
+    range.setAttribute("aria-valuetext", `${slides[i].dataset.title}, ${i + 1} из ${slides.length}`);
+  }
   // старые ссылки на блоки, которые теперь живут внутри слайдов
   // (старые ссылки на убранные слайды: «Материалы» → «Главная», «Популярное» → «Знакомство», «О нас» → «Опт»)
   const ALIASES = { materials: "home", colors: "welcome", popular: "welcome", about: "opt", club: "faq" };
@@ -32,36 +40,41 @@
 
   function go(i, { updateHash = true } = {}) {
     i = Math.max(0, Math.min(slides.length - 1, i));
-    if (i === current) return;
+    deck.classList.remove("is-scrubbing");
+    const changed = i !== current;
     current = i;
     lockUntil = Date.now() + (reduced ? 150 : 700);
-    track.style.transform = `translateX(${-100 * i}%)`;
+    range.value = i;
+    preview(i);
     slides.forEach((s, k) => {
       const on = k === i;
       s.classList.toggle("is-current", on);
       s.toggleAttribute("inert", !on); // скрытые слайды не получают фокус с клавиатуры
       s.setAttribute("aria-hidden", String(!on));
     });
-    slides[i].scrollTop = 0;
+    if (changed) slides[i].scrollTop = 0;
 
-    const p = slides[i - 1], n = slides[i + 1];
-    prev.disabled = !p; next.disabled = !n;
-    prev.setAttribute("aria-label", p ? `Назад: ${p.dataset.title}` : "Это первый раздел");
-    next.setAttribute("aria-label", n ? `Далее: ${n.dataset.title}` : "Это последний раздел");
-    // подпись под стрелками ведёт вперёд; на последнем слайде — назад к началу
-    nextLabel.querySelector("span").textContent = n ? `Далее: ${n.dataset.title}` : "↺ В начало";
-    nextLabel.setAttribute("aria-label", n ? `Далее: ${n.dataset.title}` : "Вернуться к началу");
-
-    countFrom.textContent = pad(i + 1);
-    countTo.textContent = pad(slides.length);
-    countBar.style.width = `${((i + 1) / slides.length) * 100}%`;
+    buttons.forEach((button, k) => button.setAttribute("aria-current", String(k === i)));
     document.body.dataset.slide = slides[i].id;
     if (updateHash && location.hash.slice(1) !== slides[i].id) history.replaceState(null, "", `#${slides[i].id}`);
   }
 
-  prev.addEventListener("click", () => go(current - 1));
-  next.addEventListener("click", () => go(current + 1));
-  nextLabel.addEventListener("click", () => go(current === slides.length - 1 ? 0 : current + 1));
+  range.addEventListener("input", () => {
+    deck.classList.add("is-scrubbing");
+    preview(Number(range.value));
+  });
+  const settle = () => go(Math.round(Number(range.value)));
+  range.addEventListener("change", settle);
+  range.addEventListener("pointerup", settle);
+  range.addEventListener("pointercancel", settle);
+  range.addEventListener("blur", settle);
+  range.addEventListener("keydown", e => {
+    const steps = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1, PageDown: 1, PageUp: -1 };
+    if (e.key in steps || e.key === "Home" || e.key === "End") {
+      e.preventDefault();
+      go(e.key === "Home" ? 0 : e.key === "End" ? slides.length - 1 : current + steps[e.key]);
+    }
+  });
 
   // ссылки вида index.html#opt внутри страницы
   addEventListener("hashchange", () => go(indexOf(location.hash.slice(1)), { updateHash: false }));
@@ -78,7 +91,7 @@
 
   // колесо: сначала прокручивается содержимое слайда (если не влезло), потом — следующий слайд
   deck.addEventListener("wheel", e => {
-    if (e.ctrlKey || matchMedia("(max-width: 860px)").matches) return;
+    if (e.target.closest(".deck-scrubber") || e.ctrlKey || matchMedia("(max-width: 860px)").matches) return;
     const d = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
     if (Math.abs(d) < 18) return;
     const s = slides[current];
@@ -91,8 +104,9 @@
 
   // свайп влево-вправо (вертикальный жест оставляем прокрутке слайда)
   let sx = 0, sy = 0, st = 0;
-  deck.addEventListener("touchstart", e => { const t = e.touches[0]; sx = t.clientX; sy = t.clientY; st = Date.now(); }, { passive: true });
+  deck.addEventListener("touchstart", e => { if (e.target.closest(".deck-scrubber")) { st = 0; return; } const t = e.touches[0]; sx = t.clientX; sy = t.clientY; st = Date.now(); }, { passive: true });
   deck.addEventListener("touchend", e => {
+    if (!st) return;
     const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
     if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4 && Date.now() - st < 700) go(current + (dx < 0 ? 1 : -1));
   }, { passive: true });
