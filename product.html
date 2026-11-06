@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=all-colors-wheel-11">
 </head>
 <body data-page="product">
 
@@ -24,9 +24,9 @@
   </section>
 
   <script src="js/vendor/xlsx.full.min.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=all-colors-wheel-11"></script>
   <script>
-    const { $, $$, money, esc, spool, card, stockLabel, fmtD, Cart, toast } = App;
+    const { $, $$, money, esc, spool, materialImage, materialGallery, card, stockLabel, fmtD, Cart, toast } = App;
     const params = new URLSearchParams(location.search);
 
     App.ready.then(({ products }) => {
@@ -37,7 +37,7 @@
       $("#crumbs").innerHTML = `<a href="index.html">Главная</a> / <a href="catalog.html">Каталог</a> / <a href="catalog.html?mat=${encodeURIComponent(p.mat)}">${esc(p.mat)}</a> / ${esc(p.name)}`;
 
       $("#product").innerHTML = `
-        <div class="product__media" id="media"></div>
+        <div class="product__visual"><div class="product__media" id="media"></div><p class="material-note">Иллюстрация материала. Выбранный цвет: <span id="image-color"></span>. Оттенок и фактуру уточняйте по образцам.</p></div>
         <div class="product__info">
           <span class="label">${esc(m.tag || p.mat)}</span>
           <h1 class="h2">${esc(p.name)}</h1>
@@ -81,9 +81,10 @@
         </div>`;
 
       function show() {
-        $("#media").innerHTML = spool(v.hex);
+        $("#media").innerHTML = materialGallery(p, v);
         $("#price").textContent = money(v.price);
         $("#color-name").textContent = v.color;
+        $("#image-color").textContent = v.color;
         $("#dw").textContent = `${fmtD(v.d)} мм · ${fmtD(v.w)} кг`;
         $("#stock").innerHTML = stockLabel(v.stock) + (v.stock <= 0 ? `<p class="muted" style="font-size:13px;margin-top:6px">Можно оформить — привезём с ближайшей поставкой и сообщим срок.</p>` : "");
         $("#spec-d").textContent = `${fmtD(v.d)} мм ± 0,02`;

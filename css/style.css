@@ -817,3 +817,57 @@ body[data-page="home"] .cookie { bottom: calc(124px + env(safe-area-inset-bottom
 
 /* Высокий каталог на низком экране прокручивается от самого начала. */
 #opt.slide--center { justify-content: safe center; }
+
+/* Общие изображения для каждой категории: каталог, товар, опт и корзина. */
+.material-photo { display: block; width: 88%; background: #fff url("../img/filaments/materials.png") no-repeat; }
+.card__media, .product__media, .cart-item__img { background: #fff; }
+.card__media .material-photo { width: 74%; }
+.product__media .material-photo { width: 86%; }
+.product__visual { align-self: start; min-width: 0; }
+.product__visual .product__media { position: static; }
+.cart-item__img .material-photo { width: 88%; }
+.mini-cat__img .material-photo { width: 64px; }
+.material-note { color: #595959; font-size: 12px; line-height: 1.5; margin: 12px 0 18px; }
+@media (max-width: 860px) { .mini-cat__img .material-photo { width: 48px; } }
+
+/* Перелистывание всех цветов в карточке и на странице товара. */
+.material-filter { position: absolute; pointer-events: none; }
+.material-gallery { display: flex; flex-direction: column; align-items: center; width: 100%; min-width: 0; }
+.material-gallery .material-photo { margin: 0 auto; }
+.material-gallery__controls { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 8px; padding: 8px 12px; }
+.material-gallery__controls button { display: grid; place-items: center; flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid var(--line); border-radius: 50%; background: #fff; color: #111; }
+.material-gallery__controls button:hover { background: #f2f2f2; }
+.material-gallery__controls button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.material-gallery__controls svg { width: 18px; height: 18px; }
+.material-gallery__caption { text-align: center; font-size: 12px; line-height: 1.3; }
+.material-gallery__caption small { display: block; font-size: 10px; color: #595959; margin-top: 2px; }
+.card__media { display: flex; align-items: center; }
+.card__media .material-gallery { padding-top: 12px; }
+.card__media .material-photo { width: 62%; }
+.product__media { aspect-ratio: auto; min-height: 350px; }
+.product__media .material-gallery { padding: 20px 0 4px; }
+.product__media .material-photo { width: 76%; }
+.product__media .material-gallery__controls { padding: 16px 24px; }
+.product__media .material-gallery__caption { font-size: 15px; }
+.mini-cat__img .material-gallery { width: 64px; }
+.mini-cat__img .material-gallery__controls { gap: 0; padding: 2px 0; }
+.mini-cat__img .material-gallery__controls button { width: 24px; height: 24px; flex-basis: 24px; border: 0; }
+.mini-cat__img .material-gallery__caption > span { display: none; }
+.mini-cat__img .material-gallery__caption small { font-size: 9px; margin: 0; white-space: nowrap; }
+@media (max-width: 860px) { .mini-cat__img .material-gallery { width: 48px; } .mini-cat__img .material-gallery__controls button { width: 18px; flex-basis: 18px; } }
+
+/* Колесо переключает один раздел за жест, с более спокойным движением. */
+.deck.is-ready.is-wheel-navigation .deck__track,
+.deck.is-ready.is-wheel-navigation .deck-spool { transition-duration: 1.15s; }
+@media (prefers-reduced-motion: reduce) {
+  .deck.is-ready.is-wheel-navigation .deck__track,
+  .deck.is-ready.is-wheel-navigation .deck-spool { transition: none; }
+}
+/* Узкие экраны: колонки и управление не расширяют каталог. */
+.catalog > *, .grid > *, .card__body { min-width: 0; }
+.catalog .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1040px) { .catalog .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .catalog .grid { grid-template-columns: minmax(0, 1fr); }
+  .toolbar { flex-wrap: wrap; }
+}

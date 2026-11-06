@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=material-photos-8">
+  <link rel="stylesheet" href="css/style.css?v=all-colors-wheel-11">
 </head>
 <body data-page="home">
 
@@ -169,10 +169,10 @@
   </main>
 
   <script src="js/vendor/xlsx.full.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/deck.js?v=rolling-filament-5"></script>
+  <script src="js/app.js?v=all-colors-wheel-11"></script>
+  <script src="js/deck.js?v=all-colors-wheel-11"></script>
   <script>
-    const { $, $$, money, esc, icon, spool, showcase } = App;
+    const { $, $$, money, esc, icon, spool, materialImage, materialGallery, showcase } = App;
 
     $("#tg-btn").href = SITE.telegram;
     $("#tg-btn").innerHTML = `${icon.tg} Написать ${esc(SITE.telegramName)}`;
@@ -203,16 +203,8 @@
         const dots = p.variants.filter(x => !seen.has(x.hex) && seen.add(x.hex)).slice(0, 7)
           .map(x => `<i style="background:${esc(x.hex)}" title="${esc(x.color)}"></i>`).join("");
         const opt = Math.min(...p.variants.map(x => x.opt1 || x.price));
-        const photos = {
-          "PLA Basic": [20, 44, 355, 405], "PLA+": [400, 44, 355, 405],
-          "PLA Matte": [782, 44, 355, 405], "Silk PLA": [1165, 44, 355, 405],
-          "PETG": [105, 550, 410, 400], "ABS": [560, 550, 410, 400],
-          "TPU 95A": [1017, 550, 410, 400]
-        };
-        const crop = photos[p.name];
-        const photoStyle = crop ? `background-size:${1536 / crop[2] * 100}% ${1024 / crop[3] * 100}%;background-position:${crop[0] / (1536 - crop[2]) * 100}% ${crop[1] / (1024 - crop[3]) * 100}%` : "";
         return `<a class="mini-cat__row" href="product.html?id=${p.id}&sku=${encodeURIComponent(sv.sku)}">
-          <span class="mini-cat__img">${crop ? `<span class="mini-cat__photo" role="img" aria-label="Иллюстрация ${esc(p.name)}: катушка филамента и образец печати" style="${photoStyle}"></span>` : spool(sv.hex)}</span>
+          <span class="mini-cat__img">${materialGallery(p, sv)}</span>
           <span class="mini-cat__name"><b>${esc(p.name)}</b><span class="mini-cat__dots">${dots}</span></span>
           <span class="mini-cat__price"><small>Розница</small><b>${money(p.price)}</b></span>
           <span class="mini-cat__price mini-cat__price--opt"><small>Опт от ${SITE.tiers[0]} шт.</small><b>${money(opt)}</b></span>

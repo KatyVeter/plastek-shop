@@ -33,7 +33,7 @@
       const x = -new DOMMatrixReadOnly(getComputedStyle(track).transform).m41 / track.clientWidth;
       const progress = Math.max(0, Math.min(1, (x - from) / (to - from)));
       veil(x, Math.min(Math.round(to), Math.round(from)), Math.sin(progress * Math.PI));
-      if (now - started < 700 && progress < .9999) frame = requestAnimationFrame(tick);
+      if (now - started < 1350 && progress < .9999) frame = requestAnimationFrame(tick);
       else veil(to, 0, 0);
     };
     frame = requestAnimationFrame(tick);
@@ -69,10 +69,11 @@
     return i < 0 ? 0 : i;
   };
 
-  function go(i, { updateHash = true } = {}) {
+  function go(i, { updateHash = true, slow = false } = {}) {
     i = Math.max(0, Math.min(slides.length - 1, i));
     const from = current < 0 ? i : -new DOMMatrixReadOnly(getComputedStyle(track).transform).m41 / track.clientWidth;
     deck.classList.remove("is-scrubbing");
+    deck.classList.toggle("is-wheel-navigation", slow);
     const changed = i !== current;
     current = i;
     lockUntil = Date.now() + (reduced ? 150 : 700);
@@ -125,6 +126,7 @@
   });
 
   // колесо: сначала прокручивается содержимое слайда (если не влезло), потом — следующий слайд
+  let lastWheel = 0;
   deck.addEventListener("wheel", e => {
     if (e.target.closest(".deck-scrubber") || e.ctrlKey || matchMedia("(max-width: 860px)").matches) return;
     const d = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
@@ -133,8 +135,12 @@
     const atTop = s.scrollTop <= 0, atBottom = s.scrollTop + s.clientHeight >= s.scrollHeight - 2;
     if ((d > 0 && !atBottom) || (d < 0 && !atTop)) return;
     e.preventDefault();
-    if (Date.now() < lockUntil) return;
-    go(current + (d > 0 ? 1 : -1));
+    const now = Date.now();
+    const continuingGesture = now - lastWheel < 280;
+    lastWheel = now;
+    if (continuingGesture || now < lockUntil) return;
+    go(current + (d > 0 ? 1 : -1), { slow: true });
+    lockUntil = now + 1600;
   }, { passive: false });
 
   // свайп влево-вправо (вертикальный жест оставляем прокрутке слайда)

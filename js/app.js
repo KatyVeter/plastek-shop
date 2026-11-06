@@ -431,6 +431,55 @@ window.SITE = {
     $$("#mnav a").forEach(a => a.addEventListener("click", () => header.classList.remove("is-open")));
   }
 
+  /* ---------- Общие иллюстрации материалов во всех каталогах ---------- */
+  const materialCrops = {
+    "PLA Basic": [20, 44, 355, 405], "PLA+": [400, 44, 355, 405],
+    "PLA Matte": [782, 44, 355, 405], "Silk PLA": [1165, 44, 355, 405],
+    "PETG": [105, 550, 410, 400], "ABS": [560, 550, 410, 400],
+    "TPU 95A": [1017, 550, 410, 400]
+  };
+  const galleryProducts = new Map();
+  function materialImage(product, variant = product.variants[0]) {
+    const crop = materialCrops[product.name];
+    if (!crop) return spool(variant.hex);
+    const rgb = /^#[a-f0-9]{6}$/i.test(variant.hex) ? variant.hex.slice(1).match(/../g).map(x => parseInt(x, 16) / 255) : [.5, .5, .5];
+    const filterId = `material-tint-${++uid}`;
+    const channels = ["R", "G", "B"].map((c, i) => `<feFunc${c} type="table" tableValues="0 ${rgb[i] * .25} ${rgb[i] * .6} ${rgb[i]} 1"/>`).join("");
+    const filter = `<svg class="material-filter" aria-hidden="true" width="0" height="0"><defs><filter id="${filterId}" color-interpolation-filters="sRGB"><feColorMatrix type="saturate" values="0"/><feComponentTransfer>${channels}</feComponentTransfer></filter></defs></svg>`;
+    const style = `aspect-ratio:${crop[2]}/${crop[3]};background-size:${1536 / crop[2] * 100}% ${1024 / crop[3] * 100}%;background-position:${crop[0] / (1536 - crop[2]) * 100}% ${crop[1] / (1024 - crop[3]) * 100}%;filter:url(#${filterId})`;
+    return `${filter}<span class="material-photo" role="img" aria-label="${esc(product.name)}, ${esc(variant.color)} — цветовая иллюстрация" style="${style}"></span>`;
+  }
+  function materialGallery(product, variant = showcase(product)) {
+    galleryProducts.set(product.id, product);
+    const index = Math.max(0, product.variants.findIndex(v => v.sku === variant.sku));
+    return `<span class="material-gallery" data-gallery="${esc(product.id)}" data-gallery-index="${index}">
+      ${materialImage(product, variant)}
+      <span class="material-gallery__controls">
+        <button type="button" data-gallery-step="-1" aria-label="Предыдущий цвет ${esc(product.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m14 6-6 6 6 6"/></svg></button>
+        <span class="material-gallery__caption" aria-live="polite"><span>${esc(variant.color)}</span><small>${index + 1} / ${product.variants.length}</small></span>
+        <button type="button" data-gallery-step="1" aria-label="Следующий цвет ${esc(product.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m10 6 6 6-6 6"/></svg></button>
+      </span>
+    </span>`;
+  }
+  document.addEventListener("click", e => {
+    const button = e.target.closest("[data-gallery-step]");
+    if (!button) return;
+    e.preventDefault(); e.stopPropagation();
+    const gallery = button.closest("[data-gallery]");
+    const product = galleryProducts.get(gallery.dataset.gallery);
+    const index = (Number(gallery.dataset.galleryIndex) + Number(button.dataset.galleryStep) + product.variants.length) % product.variants.length;
+    const variant = product.variants[index];
+    if (gallery.closest("#media")) {
+      document.querySelector(`#colors [data-sku="${CSS.escape(variant.sku)}"]`)?.click();
+    } else {
+      const link = gallery.closest("a");
+      if (link) link.href = `product.html?id=${product.id}&sku=${encodeURIComponent(variant.sku)}`;
+      const step = button.dataset.galleryStep;
+      gallery.outerHTML = materialGallery(product, variant);
+      if (e.detail === 0) (link || document).querySelector(`[data-gallery="${CSS.escape(product.id)}"] [data-gallery-step="${step}"]`)?.focus();
+    }
+  });
+
   /* ---------- Карточка товара в сетке ---------- */
   // Вариант для иллюстрации: яркий цвет в наличии, а не чёрный, белый или серый
   function showcase(p) {
@@ -444,7 +493,7 @@ window.SITE = {
     const dots = p.variants.slice(0, 8).map(x => `<span style="background:${esc(x.hex)}" title="${esc(x.color)}"></span>`).join("");
     const more = p.variants.length > 8 ? `<small class="muted">+${p.variants.length - 8}</small>` : "";
     return `<a class="card" href="product.html?id=${p.id}&sku=${encodeURIComponent(v.sku)}">
-      <div class="card__media">${p.badge ? `<span class="card__badge">${esc(p.badge)}</span>` : ""}${spool(v.hex)}</div>
+      <div class="card__media">${p.badge ? `<span class="card__badge">${esc(p.badge)}</span>` : ""}${materialGallery(p, v)}</div>
       <div class="card__body">
         <span class="card__mat">${esc(p.mat)}</span>
         <span class="card__title">${esc(p.name)}</span>
@@ -483,5 +532,5 @@ window.SITE = {
     throw err;
   });
 
-  window.App = { $, $$, money, esc, icon, spool, card, showcase, stockLabel, unitPrice, fmtD, plural, Cart, Account, toast, ready, store, payConfig };
+  window.App = { $, $$, money, esc, icon, spool, materialImage, materialGallery, card, showcase, stockLabel, unitPrice, fmtD, plural, Cart, Account, toast, ready, store, payConfig };
 })();

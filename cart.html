@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=all-colors-wheel-11">
 </head>
 <body data-page="cart" data-subnav="off">
 
@@ -21,9 +21,9 @@
   <div class="wrap" id="root" data-catalog><div class="loading">Загружаем корзину…</div></div>
 
   <script src="js/vendor/xlsx.full.min.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js?v=all-colors-wheel-11"></script>
   <script>
-    const { $, money, esc, spool, fmtD, unitPrice, stockLabel, Cart, Account, toast, payConfig } = App;
+    const { $, money, esc, spool, materialImage, fmtD, unitPrice, stockLabel, Cart, Account, toast, payConfig } = App;
     const COUNTRIES = SITE.countries;
     const [T1, T2] = SITE.tiers;
     let form = {};   // сохраняем введённое при перерисовке
@@ -57,7 +57,7 @@
             ${items.map(({ v, qty }) => {
               const price = unitPrice(v, total);
               return `<div class="cart-item">
-                <a class="cart-item__img" href="product.html?id=${v.product.id}&sku=${encodeURIComponent(v.sku)}">${spool(v.hex)}</a>
+                <a class="cart-item__img" href="product.html?id=${v.product.id}&sku=${encodeURIComponent(v.sku)}">${materialImage(v.product, v)}</a>
                 <div>
                   <a class="card__title" href="product.html?id=${v.product.id}&sku=${encodeURIComponent(v.sku)}">${esc(v.product.name)}, ${esc(v.color.toLowerCase())}</a>
                   <div class="card__spec">${fmtD(v.d)} мм · ${fmtD(v.w)} кг · ${money(price)}/шт. ${price < v.price ? `<s>${money(v.price)}</s>` : ""}</div>
