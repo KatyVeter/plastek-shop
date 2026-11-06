@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=pla-basic-photo-7">
+  <link rel="stylesheet" href="css/style.css?v=material-photos-8">
 </head>
 <body data-page="home">
 
@@ -70,6 +70,7 @@
       <div class="mini-cat" data-catalog>
         <div class="mini-cat__head"><b>Филаменты</b><span>цена за катушку 1 кг</span><a class="link" href="catalog.html">Весь каталог</a></div>
         <div class="mini-cat__list" id="mini-cat"><div class="loading">Загружаем каталог…</div></div>
+        <p class="mini-cat__note">Иллюстрации фактур. Оттенок и поверхность уточняйте по образцам.</p>
       </div>
     </div>
   </section>
@@ -202,22 +203,22 @@
         const dots = p.variants.filter(x => !seen.has(x.hex) && seen.add(x.hex)).slice(0, 7)
           .map(x => `<i style="background:${esc(x.hex)}" title="${esc(x.color)}"></i>`).join("");
         const opt = Math.min(...p.variants.map(x => x.opt1 || x.price));
-        const photo = p.name === "PLA Basic"
-          ? "https://img.matterhackers.com/g/Z3M6Ly9taC1wcm9kdWN0LWltYWdlcy9wcm9kL2RlYzY4NWYzLTA3YjgtNDY0NC05NDEwLTkyZDhlOGY2MGFkOQ=e365-w900-h675-c-rw"
-          : "";
+        const photos = {
+          "PLA Basic": [20, 44, 355, 405], "PLA+": [400, 44, 355, 405],
+          "PLA Matte": [782, 44, 355, 405], "Silk PLA": [1165, 44, 355, 405],
+          "PETG": [105, 550, 410, 400], "ABS": [560, 550, 410, 400],
+          "TPU 95A": [1017, 550, 410, 400]
+        };
+        const crop = photos[p.name];
+        const photoStyle = crop ? `background-size:${1536 / crop[2] * 100}% ${1024 / crop[3] * 100}%;background-position:${crop[0] / (1536 - crop[2]) * 100}% ${crop[1] / (1024 - crop[3]) * 100}%` : "";
         return `<a class="mini-cat__row" href="product.html?id=${p.id}&sku=${encodeURIComponent(sv.sku)}">
-          <span class="mini-cat__img">${photo ? `<img src="${esc(photo)}" alt="Катушка белого PLA Basic" width="48" height="48" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ""}${spool(sv.hex)}</span>
+          <span class="mini-cat__img">${crop ? `<span class="mini-cat__photo" role="img" aria-label="Иллюстрация ${esc(p.name)}: катушка филамента и образец печати" style="${photoStyle}"></span>` : spool(sv.hex)}</span>
           <span class="mini-cat__name"><b>${esc(p.name)}</b><span class="mini-cat__dots">${dots}</span></span>
           <span class="mini-cat__price"><small>Розница</small><b>${money(p.price)}</b></span>
           <span class="mini-cat__price mini-cat__price--opt"><small>Опт от ${SITE.tiers[0]} шт.</small><b>${money(opt)}</b></span>
         </a>`;
       }).join("");
-      // Если внешний источник недоступен, показываем исходную иконку катушки.
-      $$("#mini-cat img").forEach(img => {
-        const fallback = () => img.remove();
-        img.addEventListener("error", fallback, { once: true });
-        if (img.complete && !img.naturalWidth) fallback();
-      });
+
     });
   </script>
 </body>
