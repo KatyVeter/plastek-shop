@@ -178,12 +178,12 @@ button { cursor: pointer; background: none; border: 0; }
 .bhero { position: relative; overflow: hidden; background: #fff; display: flex; align-items: center; }
 /* фото на весь слайд: катушка справа, белый фон слева — уже на самом снимке */
 .bhero__photo { position: absolute; inset: 0; background: #fff url(../img/hero-blue.webp) right center / cover no-repeat; }
-/* текст выровнен по логотипу в шапке — тот же контейнер, что у шапки */
-.deck .wrap.bhero__inner { position: relative; z-index: 1; width: 100%; max-width: 1360px; padding-left: 24px; padding-right: 24px; }
+/* Текст ближе к левому краю, в том числе на широких экранах. */
+.deck .wrap.bhero__inner { position: relative; z-index: 1; width: 100%; max-width: none; padding-left: clamp(24px, 3.3vw, 64px); padding-right: 24px; }
 /* размеры привязаны к ширине экрана — пропорции как в макете */
 .bhero__text { padding: 40px 0; }
 /* лёгкое белое свечение — заголовок читается, даже если заходит на фото */
-.bhero__title { font-size: clamp(44px, 4.6vw, 84px); font-weight: 800; line-height: 1; letter-spacing: -0.045em; text-shadow: 0 0 28px rgba(255,255,255,.9); }
+.bhero__title { font-size: clamp(52px, 5.8vw, 112px); font-weight: 800; line-height: 1; letter-spacing: -0.04em; text-shadow: 0 0 28px rgba(255,255,255,.9); }
 .bhero__lead { max-width: clamp(320px, 27vw, 480px); margin: 1.9vw 0 3.4vw; font-size: clamp(16px, 1.25vw, 22px); line-height: 1.55; color: #222; }
 .bhero__btns { display: flex; gap: clamp(14px, 1.8vw, 32px); flex-wrap: wrap; }
 .bbtn {
@@ -648,6 +648,7 @@ body[data-page="home"] .footer { display: none; } /* самое нужное и�
   .bhero { flex-direction: column; align-items: stretch; padding-bottom: 76px; }
   .bhero > * { flex-shrink: 0; }
   .bhero__photo { position: relative; inset: auto; width: 100%; height: 230px; background-position: right center; }
+  .deck .wrap.bhero__inner { padding-left: 24px; padding-right: 24px; }
   .bhero__text { padding: 6px 0 0; }
   .bhero__title { font-size: 42px; }
   .bhero__lead { margin: 16px 0 24px; font-size: 16px; }
